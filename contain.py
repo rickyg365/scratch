@@ -1,5 +1,10 @@
 import os
 
+"""
+To Do:
+    add addition operator to container class so I can lay things out better under the screen class
+"""
+
 ''' Stable base 03/12/2021 '''
 # class Container:
 #     def __init__(self, x=1, y=1):
@@ -77,6 +82,10 @@ import os
 
 # Make a General Container class with all the same properties except the string methods doesnt add any extra stuff
 # Make this one into a text box class
+
+
+def clear_screen():
+    os.system("cls")
 
 
 class Container:
@@ -181,6 +190,11 @@ class Textbox(Container):
                     elif col == self.width - 1:
                         self.update(row, col, "|")
 
+
+class Fightbox(Textbox):
+    def __init__(self, x=15, y=2):
+        super().__init__(x, y)
+
         # Add Entries
         entry = ['Fight', 'Items', 'Party', 'Run']
         ''' entries can be a list input and then we sort depending on the number of rows, length of text, etc.'''
@@ -193,11 +207,27 @@ class Textbox(Container):
         self.update(2, 10, 'Run')
 
 
+class StartMenu(Textbox):
+    def __init__(self):
+        super().__init__(11, 6)
+
+        # Add Entries
+        # self.update(row#, col#, item)
+        # self.update(row#, col# + len(item) + Num_spaces, item)
+        ''' entries can be a list input and then we sort depending on the number of rows, length of text, etc.'''
+        self.update(1, 2, 'Status')
+        self.update(2, 2, 'Items')
+        self.update(3, 2, 'Equipment')
+        self.update(4, 2, 'Party')
+        self.update(5, 2, 'Options')
+        self.update(6, 2, 'Exit')
+
+
 class Screen:
     def __init__(self, height, width):
         self.height = height
         self.width = width
-
+        self.center = round(self.height/2)
         self.rows = []
 
     def add_container(self, container, side='l'):
@@ -219,6 +249,51 @@ class Screen:
             print(row)
 
 
+class Battle(Screen):
+    def __init__(self):
+        super().__init__(20, 40)
+
+        size_x = 15
+        size_y = 2
+
+        fight_box = Fightbox(size_x, size_y)
+
+        fi = Textbox(size_x, size_y)
+        fi.update(1, 2, f"HP: [======]")
+        fi.update(2, 2, f"MP:  (======)")
+
+        self.add_container(fi, 'l')
+        self.add_container(fight_box, 'r')
+
+
+class MainMenu(Screen):
+    def __init__(self):
+        super().__init__(40, 80)
+
+        # Create Containers
+        title = Textbox(40, 5)
+        title.update(3, 14,  "Program Name")
+        title.update(5, 35, f"V 1.0")
+
+        author = Container(40, 2)
+        author.update(0, 30, f"by - rickyg3")
+
+        # l and r justify to Screen size not container size
+        self.add_container(title, 'l')
+        self.add_container(author, 'l')
+
+
+class Menu(Screen):
+    def __init__(self):
+        super().__init__(20, 40)
+
+        items = ["Status", "Party", "Items", "Equipment", "Options", "Exit"]
+
+        mm = StartMenu()
+
+        self.add_container(mm, 'l')
+
+
 ''' Creating and printing '''
 # c = Container()
 # print(c)
@@ -238,21 +313,37 @@ class Screen:
 # size_y = 2
 # fight_box.set_size(size_x, size_y)
 # OR
-size_x = 15
-size_y = 2
+# size_x = 15
+# size_y = 2
+#
+# fight_box = Fightbox(size_x, size_y)
+#
+#
+# fi = Textbox(size_x, size_y)
 
-fight_box = Textbox(size_x, size_y)
 
-
-fi = Textbox(size_x, size_y)
-
-
-empty = Container(size_x + 6, size_y + 2)
+#empty = Container(size_x + 6, size_y + 2)
 
 # Screen Class
-battle_screen = Screen(20, 40)
-battle_screen.add_container(fi, 'l')
-battle_screen.add_container(fi, 'r')
-battle_screen.show()
+# battle_screen = Screen(20, 40)
 
-user_input = input("[=]: ")
+
+if __name__ == "__main__":
+    # Opening Screen
+    clear_screen()
+    M = MainMenu()
+    M.show()
+    input("Press Enter to Continue...")
+
+    # Start Menu
+    clear_screen()
+    startmenu = Menu()
+    startmenu.show()
+    u_input = input(f"| ")
+
+    # Battle Menu
+    clear_screen()
+    battle_screen = Battle()
+    battle_screen.show()
+    user_input = input(f"{(13 + battle_screen.center) * ' '}| ")  # replace spaces with character status or other info
+
