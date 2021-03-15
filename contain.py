@@ -385,33 +385,70 @@ if __name__ == "__main__":
     input("Press Enter to Continue...")
 
     # Create Menus that are static
-    start_menu = Menu()
-    battle_screen = Battle()  # Static for now but will change depending on enemy later
-    over_world = OverWorld()
+    def run_start():
+        start_menu = Menu()
+        run = True
+
+        while run:
+            clear_screen()
+            start_menu.show()
+
+            user_inp = input(f"| ")
+
+            if user_inp == "status":
+                pass
+            elif user_inp == "items":
+                pass
+            elif user_inp == "equipment":
+                pass
+            elif user_inp == "party":
+                pass
+            elif user_inp == "options":
+                pass
+            elif user_inp == "exit":
+                run = False
+            else:
+                print("Invalid Input")
+
+    def run_battle():
+        battle_screen = Battle()
+        battle = True
+
+        while battle:
+            clear_screen()
+            battle_screen.show()
+            user_in = input(f"{(battle_screen.width - 21) * ' '}| ")  # replace spaces w/ character status or info
+
+
+    def run_overworld():
+        over_world = OverWorld()
+        clear_screen()
+        over_world.show()
+
+        return input("[]: start []: battle []: quit\n \n>over_world>main_char> ")
+
+    # start_menu = Menu()
+    # battle_screen = Battle()  # Static for now but will change depending on enemy later
+    # over_world = OverWorld()
 
     # Main Game Loop
     running = True
 
     while running:
-        clear_screen()
-        over_world.show()
-        u_in = input("[]: start []: battle []: quit\n \n>over_world>main_char> ")
+        # clear_screen()
+        # over_world.show()
+        # u_in = input("[]: start []: battle []: quit\n \n>over_world>main_char> ")
+        u_in = run_overworld()
 
         # Use regex for pattern matching
         if u_in.lower() == 'start':
             # Start Menu
-            clear_screen()
-            # start_menu = Menu()
-            start_menu.show()
-            u_input = input(f"| ")
-            # Start menu class or function
+            # u_input = run_start()
+            run_start()
 
         elif u_in.lower() == 'battle':
             # Battle Menu
-            clear_screen()
-            # battle_screen = Battle()
-            battle_screen.show()
-            user_input = input(f"{(battle_screen.width - 21) * ' '}| ")  # replace spaces w/ character status or info
+            run_battle()
             # Battle menu class or function
 
         elif u_in.lower() == 'q':
