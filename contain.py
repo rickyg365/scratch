@@ -2,7 +2,10 @@ import os
 
 """
 To Do:
-    add addition operator to container class so I can lay things out better under the screen class
+    1. __add__ addition operator to container class so I can lay things out better under the screen class
+    2. add_container add take in matrix functionality
+    3. Dungeon Traversal via linked nodes
+    
 """
 
 ''' Stable base 03/12/2021 '''
@@ -198,13 +201,13 @@ class Fightbox(Textbox):
         # Add Entries
         entry = ['Fight', 'Items', 'Party', 'Run']
         ''' entries can be a list input and then we sort depending on the number of rows, length of text, etc.'''
-        self.update(1, 2, 'Fight')
-        self.update(1, 10, 'Items')  # 3 spaces
+        self.update(1, 3, 'Fight')
+        self.update(1, x-6, 'Items')  # 3 spaces
         # self.update(row#, col#, item)
         # self.update(row#, col# + len(item) + Num_spaces, item)
 
-        self.update(2, 2, 'Party')
-        self.update(2, 10, 'Run')
+        self.update(y, 3, 'Party')
+        self.update(y, x-6, 'Run')
 
 
 class StartMenu(Textbox):
@@ -251,19 +254,49 @@ class Screen:
 
 class Battle(Screen):
     def __init__(self):
-        super().__init__(20, 40)
+        super().__init__(20, 60)
 
-        size_x = 15
+        size_x = 19
         size_y = 2
 
-        fight_box = Fightbox(size_x, size_y)
+        # User Status
+        user_stat = Textbox(size_x, 5)
+        user_stat.update(1, 1, f"  HP:[==========] ")
+        user_stat.update(2, 1, f"  MP:(==========) ")
+        user_stat.update(3, 0, f".-------------------.")
+        user_stat.update(4, 1, f"  Fight     Items  ")
+        user_stat.update(5, 1, f"  Party     Run    ")
 
-        fi = Textbox(size_x, size_y)
-        fi.update(1, 2, f"HP: [======]")
-        fi.update(2, 2, f"MP:  (======)")
+        fight_box = Fightbox(size_x, size_y)
+        # fight_box = Fightbox(size_x+4, size_y+2)
+
+        # fi = Textbox(size_x, size_y)
+        # fi.update(1, 2, f"HP: [======]")
+        # fi.update(2, 2, f"MP:  (======)")
+
+        # fi = Textbox(18, 4)
+        # fi.update(1, 2, f"Enemy Name")
+        # fi.update(3, 2, f"HP: [========]")
+        # fi.update(4, 2, f"MP:  (========)")
+
+        fi = Textbox(19, 4)
+        fi.update(1, 2, f"Enemy Name")
+        # Status
+        status = 'burn'
+        spacing = 19 - len(status)
+        if status == 'burn':
+            fi.update(1, spacing, "frzn")
+
+        fi.update(2, 1, f"-------------------")
+        fi.update(3, 2, f"HP: [==========]")
+        fi.update(4, 2, f"MP:  (==========)")
+
+        empt = Container(1, 4)
 
         self.add_container(fi, 'l')
-        self.add_container(fight_box, 'r')
+        self.add_container(empt)
+        self.add_container(user_stat, 'r')
+        # self.add_container(fight_box, 'r')
 
 
 class MainMenu(Screen):
@@ -292,6 +325,22 @@ class Menu(Screen):
         mm = StartMenu()
 
         self.add_container(mm, 'l')
+
+
+class OverWorld(Screen):
+    def __init__(self):
+        super().__init__(40, 80)
+
+        # Create Containers
+        world_map = Textbox(70, 22)
+
+        world_map.update(1, 1, 'Start')
+        world_map.update(3, 2, ",.#'''-.,")
+        world_map.update(4, 2, "| Heart |")
+        world_map.update(5, 2, ";_    ,_;")
+        world_map.update(6, 2, "  '-.,'")
+
+        self.add_container(world_map)
 
 
 ''' Creating and printing '''
@@ -335,15 +384,35 @@ if __name__ == "__main__":
     M.show()
     input("Press Enter to Continue...")
 
-    # Start Menu
-    clear_screen()
-    startmenu = Menu()
-    startmenu.show()
-    u_input = input(f"| ")
+    # Create Menus that are static
+    start_menu = Menu()
+    battle_screen = Battle()  # Static for now but will change depending on enemy later
+    over_world = OverWorld()
 
-    # Battle Menu
-    clear_screen()
-    battle_screen = Battle()
-    battle_screen.show()
-    user_input = input(f"{(13 + battle_screen.center) * ' '}| ")  # replace spaces with character status or other info
+    # Main Game Loop
+    running = True
 
+    while running:
+        clear_screen()
+        over_world.show()
+        u_in = input("[]: start []: battle []: quit\n \n>over_world>main_char> ")
+
+        # Use regex for pattern matching
+        if u_in.lower() == 'start':
+            # Start Menu
+            clear_screen()
+            # start_menu = Menu()
+            start_menu.show()
+            u_input = input(f"| ")
+            # Start menu class or function
+
+        elif u_in.lower() == 'battle':
+            # Battle Menu
+            clear_screen()
+            # battle_screen = Battle()
+            battle_screen.show()
+            user_input = input(f"{(battle_screen.width - 21) * ' '}| ")  # replace spaces w/ character status or info
+            # Battle menu class or function
+
+        elif u_in.lower() == 'q':
+            running = False
