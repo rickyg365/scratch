@@ -48,3 +48,11 @@ time.sleep(0.45)
 ╭∩
 '''
 inp = input("\n")
+path = os.getcwd()
+system = os.name
+print(path)
+# print(system)
+if system == 'nt':
+    print("OS: Windows")
+else:
+    print(f"OS: {system}")
