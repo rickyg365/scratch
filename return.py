@@ -54,5 +54,7 @@ print(path)
 # print(system)
 if system == 'nt':
     print("OS: Windows")
+elif system == "posix":
+    print("OS: Linux")
 else:
     print(f"OS: {system}")
