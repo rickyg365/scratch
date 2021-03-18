@@ -1,0 +1,23 @@
+[
+  {
+    "cookie jar1": [
+      "cookie1",
+      "cookie2",
+      "cookie3"
+    ]
+  },
+  {
+    "jar2": [
+      "cookie1",
+      "cookie2",
+      "cookie3"
+    ]
+  },
+  {
+    "jar3": [
+      "cookie1",
+      "cookie2",
+      "cookie3"
+    ]
+  }
+]
