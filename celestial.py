@@ -83,21 +83,21 @@ class Planet(CelestialBody):
 
 
 if __name__ == "__main__":
-    # Create Objects
+    # Create Celestial Objects
 
     # Star Object
     sun = Star("Sun", "Solar System", 1.99e30, 695508)
     # Terrestrial/Rocky Planets
-    mercury = Planet("Mercury", 5.97e24, 6378.137)
-    venus = Planet("Venus", 5.97e24, 6378.137)
+    mercury = Planet("Mercury", 3.30e23, 2439.7)
+    venus = Planet("Venus", 4.87e24, 6051.8)
     earth = Planet("Earth", 5.97e24, 6378.137)
-    mars = Planet("Mars", 5.97e24, 6378.137)
+    mars = Planet("Mars", 6.42e23, 3389.5)
     # GaseousGiant Planets
-    jupiter = Planet("Jupiter", 5.97e24, 6378.137)
-    saturn = Planet("Saturn", 5.97e24, 6378.137)
-    uranus = Planet("Uranus", 5.97e24, 6378.137)
-    neptune = Planet("Neptune", 5.97e24, 6378.137)
-    pluto = Planet("Pluto", 5.97e24, 6378.137)
+    jupiter = Planet("Jupiter", 1.898e27, 69911)
+    saturn = Planet("Saturn", 5.68e26, 58232)
+    uranus = Planet("Uranus", 8.68e25, 25362)
+    neptune = Planet("Neptune", 1.02e26, 24622)
+    pluto = Planet("Pluto", 1.31e22, 1151)
 
     # Solar System
     solar_system = StarSystem(sun, sun.system_name)
@@ -116,6 +116,7 @@ if __name__ == "__main__":
     # Galaxy
     milky_way = Galaxy("Milky Way")
     milky_way.add_body(solar_system)
+
 
     # Display
     width, rows = os.get_terminal_size()
