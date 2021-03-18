@@ -121,7 +121,7 @@ if __name__ == "__main__":
     width, rows = os.get_terminal_size()
 
     # Top Border
-    print(f"{width//2 * '_'}\n")
+    print(f"{width * '_'}\n")
 
     # Galaxy
     title = "[Galaxy]"
@@ -145,7 +145,7 @@ if __name__ == "__main__":
             print(system)
             print("")
     # print(f"{earth}\n \n{sun}")
-    print(f"{width//2 * '_'}\n")
+    print(f"{width * '_'}\n")
 
 '''
 milky_way.solar_system.earth
