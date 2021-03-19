@@ -108,20 +108,6 @@ class Digimon(Monster):
         super().__init__(digimon_name, attr)
 
 
-# def save_poke(obj_list):
-#     json_obj = json.dumps(obj_list, indent=3)
-#
-#     with open("poke_data.json", 'w') as out:
-#         out.write(json_obj)
-
-
-# def save_digi(obj_list):
-#     json_obj = json.dumps(obj_list, indent=3)
-#
-#     with open("digi_data.json", 'w') as out:
-#         out.write(json_obj)
-
-
 if __name__ == "__main__":
     # Pokedex
     p = Pokedex("RG")
