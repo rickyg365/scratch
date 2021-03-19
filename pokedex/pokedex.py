@@ -10,6 +10,13 @@ Program: Pokedex and Digidex
 Author: rickyg3
 Date: 03/18/2021
 """
+""" 
+TO DO:
+- implement saving more than one pokedex, do this in a separate file so we dont ruin this working version
+- add something to do for the main program if theres already data lol
+- That should lowkey go in a separate file that imports the pokedex function from this one and
+- the intro and stuff like that should be its own class
+"""
 
 
 class Dex:
@@ -30,6 +37,9 @@ class Dex:
 
 
 class Pokedex(Dex):
+    # How do we save multiple pokedexes?
+    # saved_pokedexes = {"ot": "save_data"}
+
     def __init__(self, ot, data=None):
         if data is None:
             data = []
@@ -49,8 +59,8 @@ class Pokedex(Dex):
 
         poke_name_list = map(lambda data: data.name, self.data)
         if poke_name not in poke_name_list:
-            print(f"[{poke_name}] added to {self.belongs}'s pokedex")
-        print(poke_data)
+            print(f"\n[{poke_name}] added to {self.belongs}'s pokedex")
+        # print(poke_data)
         self.data.append(Pokemon(poke_name, poke_data))
         self.save()
 
@@ -119,14 +129,18 @@ class Monster:
         self.attr = attr
 
     def __str__(self):
-        text = f"{self.name}\t["
+        number = f"{self.attr['#']}"
+        if len(number) < 3:
+            diff = 3 - len(number)
+            number = f"{diff*'0'}{number}"
+        text = f"#{number} {self.name}\t[Type: {self.attr['Type 1']}] [Gen {self.attr['Generation']}]"
         # Restrict to one line for now
-        for attrib_name, attrib_val in self.attr.items():
-            if len(text) > 41:
-                break
-            text += f" {attrib_name}: {attrib_val} "
+        # for attrib_name, attrib_val in self.attr.items():
+        #     if len(text) > 41:
+        #         break
+        #     text += f" {attrib_name}: {attrib_val} "
 
-        text += ']'
+        # text += ']'
         return text
 
 
@@ -144,13 +158,60 @@ class Digimon(Monster):
 
 
 if __name__ == "__main__":
-    # Pokedex
-    p = Pokedex("RG")
-    p.add_pokemon('Squirtle')
-    p.add_pokemon('Bulbasaur')
-    p.add_pokemon('Charmander')
+    # Check if data is present
+    try:
+        with open("poke_data.json", 'r') as load_f:
+            load_data = json.loads(load_f.read())
 
-    print(p)
+        # Because we can only save one pokedex I didn't save who it belongs too so I can make a random
+        # pokedex and just load it
+        # Make it so if its has a name that already exists it loads data if its a new name it doesnt load any data
+        p = Pokedex("random")
+        p.load()
+        print(p)
+
+    except JSONDecodeError:
+        # Else start a new game
+        print("Welcome young trainer!")
+        username = input("\nWhat is your name?: ")
+
+        print("")
+        print(f"Ah, I see, so your name is {username}.")
+        print("\n")
+        print(f"Get ready {username}, your very own adventure is about to begin!")
+        print("\n")
+
+        user_pokedex = Pokedex(username)
+
+        starters = [
+            ["Bulbasaur", "grass type"],
+            ["Squirtle", "water type"],
+            ["Charmander", "fire type"]
+        ]
+
+        not_chosen = True
+
+        while not_chosen:
+            starter = input("Choose: \nGrass, Water, or Fire?: ")
+            if starter.lower() == 'grass':
+                confirm = input(f"\nThe {starters[0][1]} pokemon {starters[0][0]}, \n\tare you sure?: ")
+                if confirm.lower() == 'y':
+                    user_pokedex.add_pokemon(starters[0][0])
+                    not_chosen = False
+            elif starter.lower() == 'water':
+                confirm = input(f"\nThe {starters[1][1]} pokemon {starters[1][0]}, \n\tare you sure?: ")
+                if confirm.lower() == 'y':
+                    user_pokedex.add_pokemon(starters[1][0])
+                    not_chosen = False
+            elif starter.lower() == 'fire':
+                confirm = input(f"\nThe {starters[2][1]} pokemon {starters[2][0]}, \n\tare you sure?: ")
+                if confirm.lower() == 'y':
+                    user_pokedex.add_pokemon(starters[2][0])
+                    not_chosen = False
+            else:
+                print("\nInvalid input")
+
+        print(user_pokedex)
 
     # Digidex
     # d = Digidex("RG")
