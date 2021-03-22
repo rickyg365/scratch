@@ -46,7 +46,7 @@ class Chunk:
         for i in range(self.x):
             row_data = []
             for j in range(self.y):
-                row_data.append("*")
+                row_data.append(" ")
             self.data.append(row_data)
         # print(self.data)
 
@@ -254,7 +254,7 @@ if __name__ == "__main__":
     # hbar.update_health(50)
     # print(hbar)
 
-    hbar = StatusBar(display, 10, 10)
+    hbar = StatusBar(display, 0, 0)
     print(display)
 
     hbar.update_health(50)
