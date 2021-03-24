@@ -10,6 +10,18 @@ Date: 03/23/2021
 """
 
 
+class Database:
+    def __init__(self, filename):
+        self.filename = filename
+
+
+
+class ItemDatabase(Database):
+    def __init__(self, item_filename='base_item.csv'):
+        super().__init__(item_filename)
+
+
+
 def load(database: list) -> dict:
     """
     Format = choose_attribute_as_key: {attribute1: val1, attribute2: val2, attribute3: val3, attribute4: val4}
@@ -77,7 +89,7 @@ class Item:
 
 class TreasureChest:
     def __init__(self):
-        pass
+
 
     def __str__(self):
         pass
