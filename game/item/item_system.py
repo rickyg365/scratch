@@ -14,12 +14,15 @@ class Database:
     def __init__(self, filename):
         self.filename = filename
 
+    def load(self):
+        # with open(self.filename, 'r') as in_file:
+            # Load file
+        print(f"Loaded {self.filename} file")
 
 
 class ItemDatabase(Database):
     def __init__(self, item_filename='base_item.csv'):
         super().__init__(item_filename)
-
 
 
 def load(database: list) -> dict:
@@ -33,9 +36,13 @@ def load(database: list) -> dict:
             "#003": {"id": "#003", "name": "helmet", "value": 12, "description": "A reliable old helmet"}
         }
     """
+    # dict to hold our new database
     temp_db = {}
+    # iterate through all the rows in the database
     for item_row in database:
+        # Set ID attribute as key
         key = item_row['id']
+        # add item row with the chosen attribute as the key
         temp_db[key] = item_row
 
     return temp_db
@@ -89,7 +96,11 @@ class Item:
 
 class TreasureChest:
     def __init__(self):
-
+        """
+        Select random items and save a list of them
+        should we save the actual item instances or save a list with the item id's and only load the items
+        """
+        pass
 
     def __str__(self):
         pass
@@ -97,6 +108,9 @@ class TreasureChest:
 
 class Inventory:
     def __init__(self):
+        """
+        Holds user items
+        """
         pass
 
     def __str__(self):
@@ -105,6 +119,10 @@ class Inventory:
 
 
 class Shop:
+    """
+    Each shop object has its own line up
+    maybe use the box style for shop?
+    """
     def __init__(self):
         pass
 
@@ -114,7 +132,7 @@ class Shop:
 
 
 if __name__ == '__main__':
-    # SAMPLE ITEM DATABASE
+    # SAMPLE ITEM DATABASE * Not gonna be in final version
     item_db = [
         {"id": "#001", "name": "sword", "value": 10, "description": "A dull sword"},
         {"id": "#002", "name": "shield", "value": 10, "description": "A busted down shield"},
@@ -122,7 +140,11 @@ if __name__ == '__main__':
     ]
 
     # Load item database, for now its loading from an object but can change to load from a csv file
+    # For now use this
     item_database = load(item_db)
+    # # Actual Database loading
+    # item_database = ItemDatabase()
+    # item_database.load()
 
     # Create item instances, using id# and database reference (so we wont have to reload the database for each item)
     sword = Item('#001', item_database)
@@ -136,7 +158,7 @@ if __name__ == '__main__':
         helmet
     ]
 
-    # Print all item attributes
+    # Print all item attributes, item by item
     for item in items:
         print(item)
 
