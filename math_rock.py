@@ -82,6 +82,10 @@ Designs:
 '''
 
 
+def clear_screen():
+    os.system("cls")
+
+
 def getDiceGraphics(dice_num):
     data = []
     if dice_num == 1:
@@ -203,44 +207,39 @@ class DiceGame:
         Dice Game base class
         """
         self.score = 0
+        self.running = True
 
     def __str__(self):
         text = ""
         return text
 
+    def run(self):
+        while self.running:
+            sys.stdout.write(f"running...\r")
+
 
 if __name__ == '__main__':
     run = True
 
-    num_dice = 4
+    num_dice = int(input("How many dice?: "))
+    dice_type = int(input("Dice Type: d"))
+
     cur_dice = {}
 
-    start = 3
-    dice = Dice(start)
-    d20 = Dice(dtype=20)
-    d500 = Dice(dtype=500)
-
     while run:
-        os.system("clear")
+        clear_screen()
 
         for i in range(num_dice):
-            cur_dice[f"d{i+1}"] = Dice(dtype=6)
+            cur_dice[f"d{i+1}"] = Dice(dtype=dice_type)
 
         # Randomize and Print
         for dice_name, dice_obj in cur_dice.items():
             dice_obj.randomize()
-            # print(f"{dice_name}: \t{dice_obj}")
-            dice_obj.print()
 
-        # Randomize Dice
-        # dice.randomize()
-        # d20.randomize()
-        # d500.randomize()
-        #
-        # Print Dice
-        # dice.print()
-        # d20.print()
-        # d500.print()
+            if dice_obj.dtype == 6:
+                dice_obj.print()
+            else:
+                print(f"{dice_name}: \t{dice_obj}")
 
         a = input("\nAgain?: ")
         if a.lower() == 'q' or a.lower() == 'n':
