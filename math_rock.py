@@ -175,8 +175,16 @@ class Dice:
             text += f"{row}"
         return text
 
-    def __add__(self, other):
-        return
+    def __add__(self, other, spacing=1):
+        new_display = []
+        if len(self.display) == len(other.display):
+            for r in range(len(self.display)):
+                line = self.display[r] + spacing*' ' + other.display[r]
+                new_display.append(line)
+            return new_display
+        else:
+            print("Unable to add")
+        return []
 
     def print(self):
         for row in self.display:
@@ -201,6 +209,35 @@ class Dice:
         self.load(r)
 
 
+class DiceCollection:
+    def __init__(self, new_dice=None):
+        self.dice = []
+        if new_dice is None:
+            length = 0
+        else:
+            length = 1
+
+            self.dice.append(new_dice)
+
+        self.length = length
+
+    def __str__(self):
+        pass
+
+    def add_dice(self, new_dice):
+        self.dice.append(new_dice)
+
+    def show(self):
+        count = 0
+        dice_holder = Dice(dtype=6)
+
+        for dice in self.dice:
+            dice_holder.display = dice_holder + dice
+            dice_holder.value = dice_holder.value + dice.value
+
+        dice_holder.print()
+
+
 class DiceGame:
     def __init__(self):
         """
@@ -219,6 +256,7 @@ class DiceGame:
 
 
 if __name__ == '__main__':
+
     run = True
 
     num_dice = int(input("How many dice?: "))
