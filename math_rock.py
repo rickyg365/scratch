@@ -212,7 +212,7 @@ class DiceGame:
 if __name__ == '__main__':
     run = True
 
-    num_dice = 8
+    num_dice = 4
     cur_dice = {}
 
     start = 3
@@ -221,16 +221,16 @@ if __name__ == '__main__':
     d500 = Dice(dtype=500)
 
     while run:
-        os.system("cls")
+        os.system("clear")
 
         for i in range(num_dice):
-            cur_dice[f"d{i+1}"] = Dice(dtype=10)
+            cur_dice[f"d{i+1}"] = Dice(dtype=6)
 
         # Randomize and Print
         for dice_name, dice_obj in cur_dice.items():
             dice_obj.randomize()
-            print(f"{dice_name}: \t{dice_obj}")
-            # dice_obj.print()
+            # print(f"{dice_name}: \t{dice_obj}")
+            dice_obj.print()
 
         # Randomize Dice
         # dice.randomize()
