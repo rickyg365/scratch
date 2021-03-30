@@ -12,6 +12,9 @@ Author: rickyg3
 Date: 03/27/2021
 """
 
+def clear_screen():
+    os.system("clear")
+
 
 dice_a = Dice(dtype=6)
 dice_b = Dice(dtype=6)
@@ -27,7 +30,16 @@ my_collection.add_dice(dice_d)
 my_collection.add_dice(dice_e)
 my_collection.add_dice(dice_f)
 
-my_collection.show()
+
+run = True
+
+while run:
+    clear_screen()
+    for dice in my_collection.dice:
+        dice.randomize()
+        
+    my_collection.show()
+    input("\nGo again? ")
 
 
 # class TestDice:
