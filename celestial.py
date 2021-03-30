@@ -117,7 +117,6 @@ if __name__ == "__main__":
     milky_way = Galaxy("Milky Way")
     milky_way.add_body(solar_system)
 
-
     # Display
     width, rows = os.get_terminal_size()
 
