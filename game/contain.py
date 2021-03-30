@@ -88,7 +88,7 @@ To Do:
 
 
 def clear_screen():
-    os.system("cls")
+    os.system("clear")
 
 
 class Container:
