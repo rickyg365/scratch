@@ -133,14 +133,22 @@ class Abacus:
                 if current_num >= 5:
                     self.beads[0][i].active = True
                     current_num -= 5
-                if current_num != 0:
+                if current_num > 0:
+                    print(current_num)
                     for n in range(current_num):
                         self.beads[n+1][i].active = True
                 count += 1
 
 
 if __name__ == "__main__":
-    a = Abacus()
+    # a = Abacus()
     # print(a)
-    a.set_number(7264)
-    print(a)
+    run = True
+
+    while run:
+        a = Abacus()
+        os.system("clear")
+        user_num = input("Please select a number: ")
+        a.set_number(user_num)
+        print(a)
+        input("Again? ")
