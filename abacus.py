@@ -134,7 +134,7 @@ class Abacus:
                     self.beads[0][i].active = True
                     current_num -= 5
                 if current_num > 0:
-                    print(current_num)
+                    # print(current_num)
                     for n in range(current_num):
                         self.beads[n+1][i].active = True
                 count += 1
