@@ -110,7 +110,7 @@ class Abacus:
 
         return text
 
-    def set_number(self, number=0):
+    def set_number(self, number):
         # Process Number,  int -> str -> list
         #  I think this is unique to python, type conversion, I could also use floor division by 10 to get
         #  digit by digit and append it to the list
