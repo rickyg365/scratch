@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Page</title>
+</head>
+<body>
+    {% extends "template.html" %}
+
+    {% block content %}
+
+    {% if form_data %}
+    <p>Input 1: {{form_data['input1']}}</p>
+    <p>Input 2: {{form_data['input2']}}</p>
+    <p>Random: {{form_data['random_name']}}</p>
+    {% endif %}
+
+    {% endblock %}
+
+</body>
+</html>
