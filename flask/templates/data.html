@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/datastyle.css') }}" media="screen" />
+    <title>Map Data</title>
+</head>
+<body>
+    {% extends "template.html" %}
+    {% block content %}
+    <p>map</p>
+
+    <iframe src="{{ url_for('map_show', coord=start_coord) }}" height="400" width="800"></iframe>
+    {% endblock %}
+
+</body>
+</html>
