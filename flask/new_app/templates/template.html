@@ -7,14 +7,12 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1 class="logo">First Web App</h1>
-            <strong><nav>
-                <ul class="menu">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('web_page1') }}">Web page 1</a></li>
-                </ul>
-            </nav></strong>
+        <div class="header">
+            <a class="logo">Web App</a>
+            <div class="header-right">
+                <a class="active" href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('web_page1') }}">Web page 1</a>
+            </div>
         </div>
     </header>
 
