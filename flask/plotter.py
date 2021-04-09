@@ -19,15 +19,6 @@ def index():
 
 @app.route('/map')
 def map_home():
-    """
-    long_coord = float(input("choose long: "))
-    lat_coord = float(input("choose lat: "))
-    start_coord = (long_coord, lat_coord)
-    sample_map = fo.Map(location=start_coord, zoom_start=15)
-
-    return sample_map._repr_html_()
-    """
-
     return render_template("map.html")
 
 
