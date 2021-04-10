@@ -9,6 +9,11 @@ Program: Custom Item Object
 Author: Rickyg3
 Date: 04/09/2021
 """
+''' 
+Add something to display only 5 entries at a time and then you can go to the next couple of 
+entries by inputting something or by pressing a key 
+
+'''
 
 
 class Item:
@@ -22,9 +27,9 @@ class Item:
         self.tags = item_tags
 
     def __str__(self):
-        text = f"Item: {self.name} \tQTY: {self.quantity}\n"
+        text = f"Item: {self.name}\t QTY: {self.quantity}\n"
         for tag in self.tags:
-            text += f"[{tag}] "
+            text += f" [{tag}]"
         text += f"\n \nDescription: {self.description}\n"
 
         return text
@@ -41,6 +46,7 @@ class ItemContainer:
     def __str__(self):
         text = f"[{self.name}]:\n"
         for item in self.items:
+            text += 45*'-'
             text += f"\n{item}\n"
         return text
 
@@ -120,6 +126,39 @@ class Backpack(ItemContainer):
         return text
 
 
+class ItemScreen:
+    def __init__(self, item_container_object):
+        self.screen_list = self.pagify(item_container_object)
+
+    def pagify(self, item_container):
+        pages = []
+        active = True
+        n = 4
+        ite = 0
+        ref = item_container.size
+        while active:
+            new_page = []
+
+            if (ite+n) > ref:
+                end = ite + (ref - ite)
+                active = False
+            else:
+                end = ite + n
+            for i in range(ite, end):
+                new_page.append(item_container.items[ite])
+                ite += 1
+
+            pages.append(new_page)
+
+        return pages
+
+    def display(self):
+        for screen in self.screen_list:
+            for s in screen:
+                print(s)
+            input("\nPress Enter to Continue...")
+
+
 if __name__ == "__main__":
     sample_inventory = {
         # "item_name": {"name": "item_name",
@@ -158,16 +197,23 @@ if __name__ == "__main__":
         print(f"[{bag.name}'s bag] [{bag.size}]")
         print(f"\n[D]: Display\n[Q]: Quit\n")
 
-        user_input = input(">>> ")
+        user_input = input("\n>>> ")
 
         if user_input.lower() == "d":
-            print(bag)
-            input("Press [Enter] to Continue...")
+            os.system("cls")
+            # print(bag)
+            pages = ItemScreen(bag)
+            # pages.display()
+            display = pages.screen_list
+
+            for page in display:
+                os.system("cls")
+                for item in page:
+                    print(40*'-')
+                    print(item)
+                input("Press Enter to Continue...")
+
         elif user_input.lower() == 'q':
             run = False
         else:
             print("invalid input")
-
-
-
-
