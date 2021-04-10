@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datastyle.css') }}">
+    <title>Data Page</title>
+</head>
+<body>
+    {% extends "template.html" %}
+
+    {% block content %}
+
+    {% if form_data %}
+    <p>Input 1: {{form_data['name']}}</p>
+    <p>Input 2: {{form_data['description']}}</p>
+    <p>Random: {{form_data['tags']}}</p>
+    {% endif %}
+
+    {% endblock %}
+
+</body>
+</html>
