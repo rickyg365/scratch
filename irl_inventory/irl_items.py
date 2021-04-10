@@ -127,15 +127,19 @@ class Backpack(ItemContainer):
 
 
 class ItemScreen:
-    def __init__(self, item_container_object):
-        self.screen_list = self.pagify(item_container_object)
+    def __init__(self, item_container_object, num_elements=4):
+        self.screen_list = self.pagify(item_container_object, num_elements)
 
-    def pagify(self, item_container):
+    def pagify(self, item_container, elementperpage):
         pages = []
-        active = True
-        n = 4
+
+        # Variables
+        n = elementperpage
         ite = 0
         ref = item_container.size
+
+        active = True
+
         while active:
             new_page = []
 
