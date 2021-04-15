@@ -10,5 +10,6 @@ csv_file = 'data.csv'
 
 if __name__ == "__main__":
     spotify_data = pd.read_csv(csv_file)
-    print(spotify_data.info())  # no null, this lets us see what we need to fix in our data such as holes or null values
+    new_spotify_data = spotify_data.set_index('name')
+    print(new_spotify_data)   # .info())  # no null, this lets us see what we need to fix in our data such as holes or null values
     # print(spotify_data.loc[[0, 1, 2, 3, 4]])
