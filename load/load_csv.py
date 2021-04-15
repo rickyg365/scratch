@@ -5,12 +5,22 @@ import csv
 import pandas as pd
 
 
-def load_csv_json(csv_filename):
+def load_csv_raw(csv_filename):
+    new_list = []
+    with open(csv_filename, encoding='utf-8-sig') as csvf:
+        rows = csv.DictReader(csvf)
+        for row in rows:
+            new_list.append(row)
+
+    return new_list
+
+
+def load_csv_json(csv_filename, key_value="id"):
     new_dict = {}
     with open(csv_filename, encoding='utf-8-sig') as csvf:
         rows = csv.DictReader(csvf)
         for row in rows:
-            key = row['id']
+            key = row[key_value]
             new_dict[key] = row
     return new_dict
 
