@@ -4,3 +4,4 @@ flask/irl_inventory/reference/__pycache__/irl_items.cpython-37.pyc
 load/__pycache__/load_csv.cpython-37.pyc
 data_projects/minerals/dependency/__pycache__/load_csv.cpython-37.pyc
 data_projects/spotify/dependency/__pycache__/load_csv.cpython-37.pyc
+*.png
