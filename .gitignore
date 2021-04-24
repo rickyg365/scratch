@@ -9,3 +9,4 @@ data_projects/spotify/dependency/__pycache__/load_csv.cpython-37.pyc
 league_autogui/__pycache__/smtptext.cpython-37.pyc
 league_autogui/dependancies/__pycache__/automation.cpython-37.pyc
 league_autogui/dependancies/__pycache__/smtptext.cpython-37.pyc
+league_autogui/dependancies/lol.ahk
