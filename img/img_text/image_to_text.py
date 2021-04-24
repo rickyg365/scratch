@@ -11,7 +11,7 @@
 import numpy as np
 
 import cv2
-from PIL import Image
+from PIL import Image, ImageOps
 from pytesseract import pytesseract
 
 # # Defining paths to tesseract.exe
@@ -77,15 +77,19 @@ path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 # location to pytesseract library
 pytesseract.tesseract_cmd = path_to_tesseract
 
-images = ['service_provider.png', 'down.png', 'up.png', 'ping.png', 'rand.png']
+# images = ['service_provider.png', 'down.png', 'up.png', 'ping.png', 'rand.png']
+images = ['send_it.png', 'specific.png']
 
 for image in images:
     # print(f"sample_images\\{image}")
     # Load using PIL
-    # img = Image.open(f"sample_images\\{image}")
+    image_path = f"sample_images\\{image}"
+    pre_img = Image.open(image_path)
+    pre_img = ImageOps.invert(pre_img)
+    pre_img.save(image_path, quality=95)
 
     # Load using OpenCV
-    img = cv2.imread(f"sample_images\\{image}")
+    img = cv2.imread(image_path)
 
     ''' pre process image for better results '''
 
@@ -111,4 +115,4 @@ for image in images:
 
     text = pytesseract.image_to_string(img)
 
-    print(f"\n{image.split('.')[0]}: {text}")
+    print(f"\n{image.split('.')[0]}: \n{text}")

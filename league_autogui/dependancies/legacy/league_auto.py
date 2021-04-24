@@ -1,9 +1,10 @@
 import os
 import sys
 
-import cv2
-
 import time
+import logging
+
+import cv2
 import pyautogui
 
 
@@ -57,6 +58,7 @@ def find_button_click(image_file, repeat=False):
             print("click")
 
             print("\nsuccess!")
+            logging.info(f"Success: [{base_name.title()}]")
             return True
 
         else:
@@ -65,6 +67,8 @@ def find_button_click(image_file, repeat=False):
             if not repeat:
                 # print("")
                 run = False
+        time.sleep(0.1)
+    logging.error(f"[{base_name.title()}] failed: {counter} times")
 
 
 def find_trigger(image_file):
@@ -80,34 +84,64 @@ def find_trigger(image_file):
         height = 900
 
         region = (left, top, width, height)
-        button = pyautogui.locateCenterOnScreen(image_file, confidence=0.9)
+        button = pyautogui.locateCenterOnScreen(image_file)  # , confidence=0.9
 
         if button:
             print("\nTrigger Found!")
+            logging.info(f"Trigger Found [{base_name.title()}]")
             return True
 
         else:
             print(f"\rfailed: {counter}", end='')
             counter += 1
+        # time.sleep(0.1)
+    logging.error(f"[{base_name.title()}] failed: {counter-1} times")
 
 
 if __name__ == "__main__":
+    ''' Logging '''
+    # logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
+    # logging.debug('DEBUG')
+    # logging.info('INFO')
+    # logging.warning('WARNING')
+    # logging.error('ERROR')
+    logging.basicConfig(filename='lol_agui.log', level=logging.DEBUG, filemode='w')
 
-    # For when you're in low priority queue
-    # wait_timer(11)
-
-    ''' New School '''
+    ''' League Client Handler '''
     # find_trigger('send_it.png')
     find_trigger('specific.png')
+
+    # Open League client
+    pyautogui.press('win')
+    pyautogui.write('lol', interval=0.15)  # type with quarter-second pause in between each key
+    pyautogui.press('enter')
+    time.sleep(120)
+
+    # Get into a game
+    print("")
+    find_button_click('play.png')
+    print("")
+    time.sleep(1)
+
+    # Select Game mode
+    find_button_click('aram_ul.png', repeat=True)
+    print("")
+    time.sleep(0.3)
+
+    find_button_click('confirm.png')
+    print("")
+    time.sleep(0.6)
 
     # after a match is over
     find_button_click('play_again.png')
     print("")
-    time.sleep(1)
-    print("")
+    time.sleep(0.8)
+
     find_button_click('find_match.png')
     print("")
     # find_button_click('decline.png', loop_var=True)
-    print("")
-    find_button_click('accept.png', repeat=True)
 
+    # For when you're in low priority queue
+    wait_timer(20)
+
+    find_button_click('accept.png', repeat=True)
