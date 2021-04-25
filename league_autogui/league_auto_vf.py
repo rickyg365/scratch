@@ -1,5 +1,6 @@
 import os
 
+import re
 import time
 
 import pyautogui
@@ -376,10 +377,10 @@ class LolHandler:
         move_x = 100
         while True:
             button = pyautogui.locateCenterOnScreen(image_file)  # , confidence=0.9
-            if counter % 100 == 0:
-                move_x *= -1
-                pyautogui.moveTo(1000 - move_x, 1000)
-                time.sleep(90)
+            # if counter % 100 == 0:
+            #     move_x *= -1
+            #     pyautogui.moveTo(1000 - move_x, 1000)
+            #     time.sleep(90)
             if button:
                 # # Screenshot
                 # pyautogui.screenshot('notif_search.png', region=region)
@@ -491,32 +492,113 @@ if __name__ == "__main__":
     # Initialize Client Handler instance
     client_handler = LolHandler()
 
-    setting = pyautogui.prompt("Select a setting \n - start\n - monitor\n - after", "Setting")
+    raw_input = pyautogui.prompt("Select your settings: \n{ start, monitor, after} "
+                                 "{aram, summoners rift, one for all} {Queue Timer}", "Setting")
+    # # Regex would be waaaay better for parsing
+    # start_pattern = re.compile(r'(start|monitor) (aram|summoners rift|one for all)? (\d*\.?\d*)?')
+    # after_pattern = re.compile(r'(after) (t|f)? (\d*\.?\d*)?')
+    #
+    # # Defaults
+    # config = ""
+    # gamemode = 'aram'
+    # timer = 0.0
+    # change_mode = 'f'
+    #
+    # start = re.search(start_pattern, raw_input)
+    # if start:
+    #     # print(start)
+    #     # print(f"config: {start[1]}")
+    #     # print(f"gamemode: {start[2]}")
+    #     # print(f"timer: {start[3]}")
+    #
+    #     config = start[1]
+    #     print(config)
+    #     # gamemode = start[2]
+    #     # timer = start[3]
+    #     try:
+    #         gamemode = start[2]
+    #     except IndexError:
+    #         pass
+    #     try:
+    #         timer = start[3]
+    #     except IndexError:
+    #         pass
+    #
+    # after = re.search(after_pattern, raw_input)
+    # if after:
+    #     # print(after)
+    #     # print(f"config: {after[1]}")
+    #     # print(f"timer: {after[2]}")
+    #     config = after[1]
+    #     print(config)
+    #     try:
+    #         change_mode = after[2]
+    #     except IndexError:
+    #         pass
+    #     try:
+    #         timer = after[3]
+    #     except IndexError:
+    #         pass
 
-    if setting == 'start':
-        mode = pyautogui.prompt("Select a Gamemode:", "Gamemode")
-        timer = pyautogui.prompt("How long is your Queue timer?:", "Timer")
-        client_handler.set_gamemode(mode)
+    master_pattern = re.compile(r'(start|monitor|after) ?(aram|summoners rift|one for all)? ?(\d+\.?\d*)?')
+    # Defaults
+    config = ""
+    gamemode = 'aram'
+    timer = 0.0
+
+    start = re.search(master_pattern, raw_input)
+    if start:
+        # print(start)
+        # print(f"config: {start[1]}")
+        # print(f"gamemode: {start[2]}")
+        # print(f"timer: {start[3]}")
+
+        config = start[1]
+        print(config)
+        gamemode = start[2]
+        timer = start[3]
+        if gamemode is None:
+            gamemode = 'aram'
+        if timer is None:
+            timer = '0.0'
+
+        # try:
+        #     gamemode = start[2]
+        #     print(gamemode)
+        # except IndexError:
+        #     pass
+        # try:
+        #     timer = start[3]
+        #     print(timer)
+        # except IndexError:
+        #     pass
+
+    print('*', config)
+
+    if config == 'start':
+        # mode = pyautogui.prompt("Select a Gamemode:", "Gamemode")
+        # timer = pyautogui.prompt("How long is your Queue timer?:", "Timer")
+        client_handler.set_gamemode(gamemode)
+        print(timer)
         client_handler.set_timer(float(timer))
 
         print(client_handler)
         client_handler.start_up()
 
-    elif setting == 'monitor':
-        mode = pyautogui.prompt("Select a Gamemode:", "Gamemode")
-        timer = pyautogui.prompt("How long is your Queue timer?:", "Timer")
-        client_handler.set_gamemode(mode)
+    elif config == 'monitor':
+        # mode = pyautogui.prompt("Select a Gamemode:", "Gamemode")
+        # timer = pyautogui.prompt("How long is your Queue timer?:", "Timer")
+        client_handler.set_gamemode(gamemode)
         client_handler.set_timer(float(timer))
 
         print(client_handler)
         client_handler.monitor_mode()
         client_handler.start_up()
 
-    elif setting == 'after':
-        change_mode = pyautogui.confirm(text='Change Gamemode?', title='Change Gamemode', buttons=['yes', 'no'])
-        if change_mode == 'ok':
-            new_mode = pyautogui.prompt("Gamemode:", "Change Gamemode")
-            client_handler.set_gamemode(new_mode)
+    elif config == 'after':
+        # change_mode = pyautogui.confirm(text='Change Gamemode?', title='Change Gamemode', buttons=['yes', 'no'])
+        # new_mode = pyautogui.prompt("Gamemode:", "Change Gamemode")
+        # client_handler.set_gamemode(new_mode)
         client_handler.after_match()
     else:
         print("Invalid Setting")
