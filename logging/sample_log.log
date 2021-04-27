@@ -1,0 +1,6 @@
+[04-27-2021]:13:12:46 :__main__: INFO: Starting Main log
+[04-27-2021]:13:12:46 :sample_log: INFO: Starting Sample log
+[04-27-2021]:13:12:46 :root: DEBUG: sample msg
+[04-27-2021]:13:12:46 :sample_log: DEBUG: sample debug msg
+[04-27-2021]:13:12:46 :sample_log: DEBUG: {'name': 'Samsung Galaxy S9', 'price': 990}
+[04-27-2021]:13:12:46 :sample_log: WARNING: Test Warning

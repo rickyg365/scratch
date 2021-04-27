@@ -151,10 +151,12 @@ def find_button_click(image_file, region=(0, 0, 0, 0), screenshot=False, repeat=
                 return False
 '''
 
+
 class SearchObject:
-    def __init__(self, image_file, region=(0, 0, 3900, 2200)):
+    def __init__(self, image_file, base_name, region=(0, 0, 3900, 2200)):
         self.raw_image = image_file
-        self.base_image = self.process(image_file)
+        # self.base_image = self.process(image_file)
+        self.base_image = base_name
         # set region to whole screen by default
         self.region = region
         # self.screenshot = screenshot
@@ -168,12 +170,12 @@ class SearchObject:
     def set_region(self, left, top, width, height):
         self.region = (left, top, width, height)
 
-    def process(self, file_name):
-        base_name, ext = file_name.split(".")
-        base_name = base_name.split('\\')
-        base_name = base_name[1]
-
-        return f"[{base_name.title()}]"
+    # def process(self, file_name):
+    #     base_name, ext = file_name.split(".")
+    #     base_name = base_name.split('\\')
+    #     base_name = base_name[1]
+    #
+    #     return f"[{base_name.title()}]"
 
     def locate_button(self, confide=0.7, slow=0.0, max_loops=500,  take_screenshot=False, repeat=False):
         print(f"[{self.base_image.title()}]")
@@ -199,8 +201,9 @@ class SearchObject:
             if slow > 0.0:
                 time.sleep(slow)
 
-    def move_click(self, max_loops=3):
-        found, button_to_click = self.locate_button(repeat=True, slow=0.1, max_loops=max_loops)
+# Redo this the ovel=click should not depend on the locate button they should work independently even if I have to call the locat button before the move_click
+    def move_click(self, max_loops=3, slow_amount=0.0):
+        found, button_to_click = self.locate_button(repeat=True, slow=slow_amount, max_loops=max_loops)
         if found:
             pyautogui.moveTo(button_to_click)
 
@@ -224,7 +227,7 @@ class SearchObject:
 
 
 if __name__ == "__main__":
-    new_button = SearchObject('random_image.png', (0, 0, 400, 400))
+    new_button = SearchObject('random_image.png', 'random_image', (0, 0, 400, 400))
 
     new_button.move_click()
     new_button.trigger_event()

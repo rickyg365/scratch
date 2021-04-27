@@ -377,10 +377,9 @@ class LolHandler:
         move_x = 100
         while True:
             button = pyautogui.locateCenterOnScreen(image_file)  # , confidence=0.9
-            # if counter % 100 == 0:
-            #     move_x *= -1
-            #     pyautogui.moveTo(1000 - move_x, 1000)
-            #     time.sleep(90)
+            if counter % 100 == 0:
+                move_x *= -1
+                pyautogui.dragTo(1000 - move_x, 1000)
             if button:
                 # # Screenshot
                 # pyautogui.screenshot('notif_search.png', region=region)
@@ -598,7 +597,8 @@ if __name__ == "__main__":
     elif config == 'after':
         # change_mode = pyautogui.confirm(text='Change Gamemode?', title='Change Gamemode', buttons=['yes', 'no'])
         # new_mode = pyautogui.prompt("Gamemode:", "Change Gamemode")
-        # client_handler.set_gamemode(new_mode)
+        client_handler.set_gamemode(gamemode)
+        client_handler.set_timer(float(timer))
         client_handler.after_match()
     else:
         print("Invalid Setting")
