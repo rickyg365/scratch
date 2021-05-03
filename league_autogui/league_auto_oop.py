@@ -104,7 +104,7 @@ class LolHandler:
     decline_button = SearchObject('buttons\\decline.png', 'decline', (0, 0, 3900, 2300))
 
     # Triggers
-    queue_up = SearchObject('buttons\\specific.png', 'specific', (730, 280, 650, 350))
+    queue_up = SearchObject('buttons\\specific.png', 'specific', (2800, 1400, 1100, 900))
 
     # Game Modes
     aram_button = SearchObject('buttons\\aram.png', 'aram', (0, 0, 3900, 2300))
@@ -169,7 +169,7 @@ class LolHandler:
         print("")
 
     def accept_match(self):
-        self.accept_button.move_click(max_loops=100)
+        self.accept_button.move_click(max_loops=1000)
         self.notifier.send(f"\n[{self.gamemode.upper()}] Match is ready!")
         # in case it pops up again
         accept_again, accept_location = self.accept_button.locate_button(repeat=True, slow=0.3, max_loops=35)
@@ -185,7 +185,7 @@ class LolHandler:
         just checks a certain region for certain commands
         """
 
-        self.queue_up.locate_button(repeat=True)
+        self.queue_up.locate_button(repeat=True, slow=2.2, max_loops=2000)
 
     # def start_up(self):
     #     """
@@ -255,8 +255,12 @@ if __name__ == "__main__":
     # Initialize Client Handler instance
     client_handler = LolHandler()
 
-    raw_input = pyautogui.prompt("Select your settings: \n{ start, monitor, after} "
-                                 "{aram, summoners rift, one for all} {Queue Timer}", "Setting")
+    raw_input = pyautogui.prompt("Select your settings: \n"
+                                 "\n    Config:    \t Gamemode: "
+                                 "\n    |1 start:  \t | 1 summoners "
+                                 "\n    |2 monitor \t | 2 aram "
+                                 "\n    |3 after   \t | 3 one for all "
+                                 "\n \nInput:  [CONFIG] [GAME_MODE] [QUEUE_TIMER]", "Setting")
     # # Regex would be waaaay better for parsing
     # start_pattern = re.compile(r'(start|monitor) (aram|summoners rift|one for all)? (\d*\.?\d*)?')
     # after_pattern = re.compile(r'(after) (t|f)? (\d*\.?\d*)?')
