@@ -1,0 +1,13 @@
+[04-30-2021]:21:46:12 :__main__: INFO: Starting Main log: [Random Matrix Generator]
+[04-30-2021]:21:46:13 :__main__: INFO: Generate Random Menu
+[04-30-2021]:21:46:16 :__main__: DEBUG: 3x3: [[61, 23, 68], [48, 32, 65], [33, 65, 77]]
+[04-30-2021]:21:46:18 :__main__: INFO: Generate Random Menu
+[04-30-2021]:21:46:19 :__main__: DEBUG: 2x2: [[66, 20], [28, 80]]
+[04-30-2021]:21:46:22 :__main__: INFO: Custom Matrix Menu
+[04-30-2021]:21:46:29 :__main__: DEBUG: 2x2: [[1, 1], [2, 2]]
+[04-30-2021]:21:46:31 :__main__: INFO: Generate Random Menu
+[04-30-2021]:21:46:35 :__main__: DEBUG: 4x4: [[0, 45, 92, 98], [95, 80, 49, 13], [67, 31, 25, 80], [89, 56, 5, 80]]
+[04-30-2021]:21:46:38 :__main__: INFO: Check Log Menu
+[04-30-2021]:21:46:48 :__main__: INFO: Help Menu
+[04-30-2021]:21:46:49 :__main__: INFO: Quit Menu
+[04-30-2021]:21:46:49 :__main__: INFO: Bye Bye!

@@ -156,7 +156,7 @@ class LolHandler:
 
     def lock_in_gamemode(self):
         # Select Game mode
-        self.current_gamemode.move_click()
+        self.current_gamemode.move_click(max_loops=1000, slow_amount=0.1)
         print("")
         time.sleep(0.5)
 
@@ -342,10 +342,12 @@ if __name__ == "__main__":
         client_handler.open_client()
 
         # Searches for play button trigger
+        time.sleep(0.5)
         client_handler.play_button.locate_button(repeat=True, slow=0.2)
-        client_handler.play_button.move_click()
 
-        time.sleep(1)
+        client_handler.play_button.move_click(max_loops=20)
+
+        time.sleep(0.9)
 
         # Select Game mode
         client_handler.lock_in_gamemode()
@@ -370,6 +372,7 @@ if __name__ == "__main__":
         client_handler.open_client()
 
         # Searches for play button trigger
+        time.sleep(0.5)
         client_handler.play_button.locate_button(repeat=True, slow=0.2)
         client_handler.play_button.move_click()
 

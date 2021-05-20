@@ -177,8 +177,9 @@ class SearchObject:
     #
     #     return f"[{base_name.title()}]"
 
+    # Add Logger
     def locate_button(self, confide=0.7, slow=0.0, max_loops=500,  take_screenshot=False, repeat=False):
-        print(f"[{self.base_image.title()}]")
+        logging.info(f"[{self.base_image.title()}]")
         counter = 1
 
         while True:
@@ -190,11 +191,13 @@ class SearchObject:
             if button:
                 if take_screenshot:
                     pyautogui.screenshot(f"{self.base_image}_screenshot.png", self.region)
+                logging.info("\nsuccess!")
                 print("\nsuccess!")
                 return True, button
 
             else:
                 print(f"\rfailed: {counter}", end='')
+                logging.info(f"\rfailed: {counter}", end='')
                 counter += 1
                 if not repeat:
                     return False, (0, 0)
@@ -210,6 +213,7 @@ class SearchObject:
             pyautogui.click(button_to_click)
             return True
         else:
+            logging.info(f"[{self.base_image}]: Not Found.")
             print(f"[{self.base_image}]: Not Found.")
             return False
 
@@ -222,6 +226,7 @@ class SearchObject:
             return True
 
         else:
+            logging.info(f"[{self.base_image}]: Not Found.")
             print(f"[{self.base_image}]: Not Found.")
             return False
 
