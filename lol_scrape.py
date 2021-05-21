@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from anytree import Node, RenderTree
 
+
 class Ability:
     def __init__(self):
         self.name = ""
@@ -77,16 +78,34 @@ class LeagueScraper:
         rune_data = {
             'primary': {'name': "", 'keystone': "", '1': "", '2': "", '3': ""},
             'secondary': {'name': "", "1": "", "2": ""},
-            'stats': {'1': "", '2': "", "3": ""}
+            'stats': {'1': "", '2': "", "3": ""},
+            'skills': [],
+            'sums': [],
+            'items': {'starter': [], 'core': [], 'full': []}
         }
 
         starting_point = self.soup.select_one("div.css-k0869a")
-
+# Build Base Container
         build_info = starting_point.select_one("div.css-1a8oi0m")
 
         build = build_info.select_one("div.css-1qedivl")
 
-        raw_runes = build.select_one("div.css-1o7o6pr")
+        skills = build.select("div.css-1evdfmk")
+
+# Skill Order
+        skill_order = skills[1]
+
+        skill_order = skill_order.select_one("div.css-70qvj9")
+
+        skill_order = skill_order.findAll('p')
+
+        rune_data['skills'] = [skill.get_text() for skill in skill_order]
+
+# Runes
+
+        raw_info = build.select("div.css-1o7o6pr")
+
+        raw_runes = raw_info[0]
 
         runes = raw_runes.select("div.css-1h50o8o")
 
@@ -151,6 +170,37 @@ class LeagueScraper:
             }
             rune_data['stats'][f"{index+1}"] = f"{stat_name}: {stat_map.get(stat_choice)}"
             # print(f"{index + 1}: {stat_name}: {stat_map.get(stat_choice)}")
+# Summoner Spells and Items
+        sums_items = raw_info[1]
+
+        sums_items = sums_items.select("div.css-h82iku")
+
+        sums = sums_items[0]
+        sums = sums.select("div.css-1iu2z76")
+        for s in sums:
+            data = s.find('img')
+            sum_name = data['src'].split('-')[-1][15:-4]
+            rune_data['sums'].append(sum_name)
+            # print(sum_name)
+        # print(sums)
+
+        items = sums_items[1]
+
+        item_sets = items.select("div.css-19xu9kw")
+
+        for index, item_set in enumerate(item_sets):
+            item_list = item_set.findAll('img')
+            new_list = []
+            for item in item_list:
+                name = item['alt']
+                new_list.append(name)
+            item_sets[index] = new_list
+
+        rune_data['items']['starter'] = item_sets[0]
+
+        rune_data['items']['core'] = item_sets[1]
+
+        rune_data['items']['full'] = item_sets[2]
 
         return rune_data
 
@@ -267,26 +317,70 @@ class LeagueScraper:
 
 if __name__ == "__main__":
     champ = input('Choose a champ: ')
+    print("")
     my_scraper = LeagueScraper(champ)
     my_scraper.get_page('aram')
     my_runes = my_scraper.extract_data()
 
     # print(my_runes)
-    champion = Node(champ)
-    primary = Node(my_runes['primary']['name'], parent=champion)
+    champion = Node(champ.title())
+
+# Skills
+    skills = Node('Skills', parent=champion)
+
+    skill_max = ""
+    for size_t, skill in enumerate(my_runes['skills']):
+        if size_t == 2:
+            skill_max += f"{skill}"
+        else:
+            skill_max += f"{skill} > "
+    skill = Node(skill_max, parent=skills)
+
+    # for size_t, skil in enumerate(my_runes['skills']):
+    #     new_skill = Node(f"{size_t+1}: {my_runes['skills'][size_t]}", parent=skills)
+
+    # skill1 = Node(my_runes['skills'][0], parent=skills)
+    # skill2 = Node(my_runes['skills'][1], parent=skills)
+    # skill3 = Node(my_runes['skills'][2], parent=skills)
+
+    # Summoner Spells
+    sums = Node('Summoner Spells', parent=champion)
+
+    sumd = Node(f"D: {my_runes['sums'][0]}", parent=sums)
+    sumf = Node(f"F: {my_runes['sums'][1]}", parent=sums)
+
+    # Runes
+    runes = Node("Runes", parent=champion)
+
+    primary = Node(my_runes['primary']['name'], parent=runes)
 
     keystone = Node(my_runes['primary']['keystone'], parent=primary)
     pone = Node(my_runes['primary']['1'], parent=primary)
     ptwo = Node(my_runes['primary']['2'], parent=primary)
     pthree = Node(my_runes['primary']['3'], parent=primary)
 
-    secondary = Node(my_runes['secondary']['name'], parent=champion)
+    secondary = Node(my_runes['secondary']['name'], parent=runes)
     sone = Node(my_runes['secondary']['1'], parent=secondary)
     stwo = Node(my_runes['secondary']['2'], parent=secondary)
 
-    stat1 = Node(my_runes['stats']['1'], parent=champion)
-    stat2 = Node(my_runes['stats']['2'], parent=champion)
-    stat3 = Node(my_runes['stats']['3'], parent=champion)
+    stat1 = Node(my_runes['stats']['1'], parent=runes)
+    stat2 = Node(my_runes['stats']['2'], parent=runes)
+    stat3 = Node(my_runes['stats']['3'], parent=runes)
+
+    # Items
+    items = Node('Items', parent=champion)
+
+    starter = Node('Starter', parent=items)
+    for s_item in my_runes['items']['starter']:
+        new_s_item = Node(s_item, parent=starter)
+
+    core = Node('Core', parent=items)
+    for c_item in my_runes['items']['core']:
+        new_c_item = Node(c_item, parent=core)
+
+    full = Node('Full', parent=items)
+    for f_item in my_runes['items']['full']:
+        new_f_item = Node(f_item, parent=full)
 
     for pre, fill, node in RenderTree(champion):
         print("%s%s" % (pre, node.name))
@@ -308,3 +402,4 @@ if __name__ == "__main__":
     #     f"\n{my_runes['stats']['3']}"
     #     f"\n"
     # )
+    print()
