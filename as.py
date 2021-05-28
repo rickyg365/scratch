@@ -49,10 +49,15 @@ async def main():
     task5 = asyncio.create_task(func5())
 
     pre = asyncio.create_task(precursor())
+
     await pre
 
     print("-"*20)
 
+    # await task1
+    # await task2
+    # await task3
+    # await task4
     await task5
 
     # await func1()

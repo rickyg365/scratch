@@ -25,7 +25,7 @@ class PomoTimer:
         return text
 
     @ staticmethod
-    def timer(timer_title, timer_amount):
+    def make_timer(timer_title, timer_amount):
         # Reference time
         start_time = time.perf_counter()
 
@@ -43,20 +43,20 @@ class PomoTimer:
                 print(f"\r{timer_title}: [Finished]")
                 timed = False
 
-    def start_timer(self):
+    def start(self):
 
         run = True
 
         while run:
             for _ in range(self.cycle):
                 # Study
-                self.timer("Study", self.study_timer)
+                self.make_timer("Study", self.study_timer)
                 # Break
-                self.timer("Break", self.short_break)
+                self.make_timer("Break", self.short_break)
             # Study
-            self.timer("Study", self.study_timer)
+            self.make_timer("Study", self.study_timer)
             # Long Break
-            self.timer("Long Break", self.long_break)
+            self.make_timer("Long Break", self.long_break)
 
             run = False
             # cont = input("Do another loop?(Y/N): ")
@@ -68,4 +68,4 @@ class PomoTimer:
 if __name__ == "__main__":
     clear_screen()
     my_timer = PomoTimer(5, 1, 3)
-    my_timer.start_timer()
+    my_timer.start()
