@@ -2,7 +2,9 @@
 
 <style>
     .green-text {
+        font-family: monospace;
         color: green;
+
     }
 
     label {
@@ -23,8 +25,14 @@
             function sayBye(who) {
                 document.write("Bye, " + who + "<br>")
             }
+
+            function getEleId(id) {
+                document.getElementById(id).innerHTML = "yo yo yo"
+            }
+
         </script>
     </head>
+
     <body>
         <div id="pre-half">
             <!-- p>pre-half</p -->
@@ -34,7 +42,37 @@
             <h1 class="green-text">Welcome!</h1>
             <h4>click <a href="#">here</a> for more info </h4>
             
+            <div id="field-set">
+                <fieldset>
+                    <legend id="title">Sample Field Set</legend>
+                    
+                    <div id="fieldset-data-label1">
+                        <label for="">Color</label>
+                    </div>
+                    <div id="fieldset-data1">
+                        <input type="color">
+                        <input type="time">
+                        <input type="date">
+                    </div>
+
+                    <br>
+
+                    <div id="fieldset-data-label2">
+                        <label for="fieldset-data2">Color</label>
+                    </div>
+                    <div id="fieldset-data2">
+                        <input list="options" type="text">
+                        <datalist id="options">
+                            <option value="option1">
+                            <option value="option2">
+                            <option value="option3">
+                            <option value="option4">  
+                        </datalist>
+                    </div>
+                </fieldset>
+            </div>
         </div>
+
         <div id="bot-half">
             <!--p>bot-half</p-->
             <form action="#">
@@ -44,6 +82,7 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+        
         <div id="post-half">
             <p>post-half</p>
             <script>
@@ -59,6 +98,8 @@
                 alert("bye asshole")
             </script>
         </div>
+
+        <button type="button" onclick="getEleId('title')">Click Here</button>
         
     </body>
 </html>
