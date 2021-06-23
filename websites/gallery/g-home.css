@@ -139,29 +139,37 @@ header {
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: auto auto auto auto;
     column-gap: 5px;
-    background-color: blue;
+    /* background-color: blue; */
 }
 
 .img-card {
     margin: 5px;
     padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    /* border-radius: 0px 0px 10px 10px; */
     color: rgb(0, 26, 255);
-    background-color: red;
+    background-color: rgba(147, 235, 147, 0.87);
+}
+
+.img-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 .img-card > .title {
     color: white;
-    background-color: goldenrod;
+    /* background-color: goldenrod; */
     font-weight: bold;
 }
 
 .img-card p {
-    background-color: gray;
+    color: white;
+    /* background-color: gray; */
     /* text-align: center; */
 }
 
 .img-card img {
-    background-color: indigo;
+    /* background-color: indigo; */
     width: 100%;
     height: auto;
 }
@@ -172,7 +180,7 @@ header {
         grid-template-columns: 50% 50%;
         grid-template-rows: auto auto auto auto;
         column-gap: 5px;
-        background-color: blue;
+        /* background-color: blue; */
     }
 }
   
@@ -182,7 +190,7 @@ header {
         grid-template-columns: auto;
         grid-template-rows: auto auto auto auto;
         column-gap: 5px;
-        background-color: blue;
+        /* background-color: blue; */
     }
 }
 
