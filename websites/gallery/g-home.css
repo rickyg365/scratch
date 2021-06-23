@@ -1,0 +1,136 @@
+:root {
+    --bg-color: rgba(123, 255, 123, 0.582);
+    --active-color: #04AA6D;
+    --icon-bar-bg: #555;
+    --menu-icon-maxw: 80px;
+    --menu-icon-maxh: 70px;
+    --menu-icon-w: 60px;
+    --menu-icon-h: 60px;
+}
+
+html {
+    background-color: var(--bg-color);
+}
+
+/* Header */
+
+.tab-grid {
+    background-color: transparent;
+    
+}
+
+.icon-bar {
+    width: 100%; /* Full-width */
+    position: sticky;
+    display: grid;
+    grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
+    grid-template-rows: var(--menu-icon-maxh);
+    background-color: var(--icon-bar-bg); /* Dark-grey background */
+    column-gap: 2px;
+    overflow: auto; /* Overflow due to float */
+}
+
+.active {
+    background-color: var(--active-color); /* Add an active/current color */
+}
+
+.menu-icon {
+    /* display: inline-block; */
+    width: var(--menu-icon-w);
+    height: var(--menu-icon-h);
+    justify-self: center;
+    background-color: var(--active-color);
+    margin: 5px;
+    cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+    height: 5px;
+    align-content: center;
+    justify-self: center;
+    background-color: #333 !important;
+    margin: 6px;
+    padding: 3px;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-14px, 13px) ;
+    transform: rotate(-45deg) translate(-14px, 13px) ;
+}
+  
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+  
+/* Rotate last bar */
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-10px, -10px) ;
+    transform: rotate(45deg) translate(-10px, -10px) ;
+}
+  
+.icon-bar a {
+    text-align: center; /* Center-align text */
+    padding: 12px 0; /* Some top and bottom padding */
+    transition: all 0.3s ease; /* Add transition for hover effects */
+    color: white; /* White text color */
+    font-size: 36px; /* Increased font size */
+    text-decoration: none;
+}
+
+/* .icon {
+    width: 100%;
+} */
+
+.icon:hover {
+    background-color: #222; 
+}
+
+.active:hover {
+    background-color: var(--active-color);/* #353; */ 
+}
+
+.icon-content {
+    display: grid;
+    grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
+    grid-template-rows: auto;
+    column-gap: 2px;
+    background-color: goldenrod;
+}
+
+.tabcontent {
+    padding: 10px 0;
+    margin: 5px;
+    display: none;
+    overflow: hidden;
+    /* border: 1px solid #ccc; */
+    border-top: none;
+}
+
+.menu-tab {
+    grid-column: 1 / span 2 ;
+    grid-row: row1-start / row1-end;
+}
+
+.home-tab {
+    grid-column: 2 / span 2 ;   
+}
+
+.search-tab {
+    grid-column: 3 / span 2 ;
+}
+.message-tab {
+    grid-column: 4 / span 2 ;
+}
+
+.contact-tab {
+    grid-column: 5 / span 1 ;
+}
+
+/* Main Content */
+
+
+/* Footer */
+  

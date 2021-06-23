@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="g-home.css">
+    <script src="g-script.js"></script>
+    <title>Sample Gallery</title>
+</head>
+<body>  
+    <header>
+        <!-- Tabs -->
+        <div class="tab-grid">
+            <div class="icon-bar">
+                <div class="menu-icon tablink" onclick="changeMenu(this); openTab(this, 'menu');">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+    
+                <a class="icon tablink" onclick="changeActive(this); openTab(this, 'home');" href="#">Home</a>
+                <a class="icon tablink" onclick="changeActive(this); openTab(this, 'search');" href="#">Search</a>
+                <a class="icon tablink" onclick="changeActive(this); openTab(this, 'message');" href="#"> <i class="fa-globe">Message</i> </a>
+                <a class="icon tablink" onclick="changeActive(this); openTab(this, 'contact');" href="#"> <i class="fa-trash">Contact</i> </a>
+            </div>
+            
+            <div class="icon-content">
+                <div id="menu" class="tabcontent menu-tab">
+                    <h3>Menu</h3>
+                    <p>London is the capital city of England.</p>
+                  </div>
+                <div id="home" class="tabcontent home-tab">
+                  <h3>Home</h3>
+                  <p>London is the capital city of England.</p>
+                </div>
+    
+                <div id="search" class="tabcontent search-tab">
+                  <h3>Search</h3>
+                  <p>Paris is the capital of France.</p>
+                </div>
+    
+                <div id="message" class="tabcontent message-tab">
+                  <h3>Message</h3>
+                  <p>Tokyo is the capital of Japan.</p>
+                </div>
+    
+                <div id="contact" class="tabcontent contact-tab">
+                    <h3>Contact</h3>
+                    <p>London is the capital city of England.</p>
+                </div>
+            </div>
+
+        </div>
+        
+
+        <!-- Tab Content -->
+        <div class="tab-grid">
+<!--            <div id="menu" class="tabcontent menu-tab">-->
+<!--                <h3>Menu</h3>-->
+<!--                <p>London is the capital city of England.</p>-->
+<!--              </div>-->
+<!--            <div id="home" class="tabcontent home-tab">-->
+<!--              <h3>Home</h3>-->
+<!--              <p>London is the capital city of England.</p>-->
+<!--            </div>-->
+<!--    -->
+<!--            <div id="search" class="tabcontent search-tab">-->
+<!--              <h3>Search</h3>-->
+<!--              <p>Paris is the capital of France.</p>-->
+<!--            </div>-->
+<!--    -->
+<!--            <div id="message" class="tabcontent message-tab">-->
+<!--              <h3>Message</h3>-->
+<!--              <p>Tokyo is the capital of Japan.</p>-->
+<!--            </div>-->
+<!--    -->
+<!--            <div id="contact" class="tabcontent contact-tab">-->
+<!--                <h3>Contact</h3>-->
+<!--                <p>London is the capital city of England.</p>-->
+<!--            </div>-->
+        </div>
+        
+    </header>
+
+    
+    <div class="main-content">
+
+    </div>
+
+
+    <footer>
+        [Footer] Website Name 
+    </footer>
+
+</body>
+</html>
