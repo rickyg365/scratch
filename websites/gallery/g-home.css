@@ -1,7 +1,7 @@
 :root {
     --bg-color: rgba(123, 255, 123, 0.582);
     --active-color: #04AA6D;
-    --icon-bar-bg: #555;
+    --icon-bar-bg: rgba(85, 85, 85, 0.993);
     --menu-icon-maxw: 80px;
     --menu-icon-maxh: 70px;
     --menu-icon-w: 60px;
@@ -25,7 +25,8 @@ header {
 
 .icon-bar {
     width: 100%; /* Full-width */
-    position: sticky;
+    position: fixed;
+    border-radius: 3px;
     display: grid;
     grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
     grid-template-rows: var(--menu-icon-maxh);
@@ -43,6 +44,7 @@ header {
     width: var(--menu-icon-w);
     height: var(--menu-icon-h);
     justify-self: center;
+    border-radius: 3px;
     background-color: var(--active-color);
     margin: 5px;
     cursor: pointer;
@@ -52,6 +54,7 @@ header {
     height: 5px;
     align-content: center;
     justify-self: center;
+    border-radius: 3px;
     background-color: #333 !important;
     margin: 6px;
     padding: 3px;
@@ -80,13 +83,42 @@ header {
     padding: 12px 0; /* Some top and bottom padding */
     transition: all 0.3s ease; /* Add transition for hover effects */
     color: white; /* White text color */
-    font-size: 36px; /* Increased font size */
+    font-size: 32px; /* Increased font size */
     text-decoration: none;
 }
 
-/* .icon {
+.icon {
     width: 100%;
-} */
+} 
+
+@media only screen and (max-width: 700px) {
+    .icon-bar {
+        width: 100%; /* Full-width */
+        position: fixed;
+        border-radius: 3px;
+        display: grid;
+        grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
+        grid-template-rows: var(--menu-icon-maxh);
+        background-color: var(--icon-bar-bg); /* Dark-grey background */
+        column-gap: 2px;
+        overflow: auto; /* Overflow due to float */
+    }
+}
+  
+@media only screen and (max-width: 500px) {
+    .icon-bar {
+        width: 100%; /* Full-width */
+        position: fixed;
+        border-radius: 3px;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: var(--menu-icon-maxh) auto auto auto auto;
+        background-color: var(--icon-bar-bg); /* Dark-grey background */
+        column-gap: 2px;
+        overflow: auto; /* Overflow due to float */
+    }
+}
+
 
 .icon:hover {
     background-color: #222; 
@@ -105,12 +137,15 @@ header {
 }
 
 .tabcontent {
-    padding: 10px 0;
-    margin: 5px;
+    padding: 10px 0px;
     display: none;
     overflow: hidden;
     /* border: 1px solid #ccc; */
     border-top: none;
+}
+
+.tabcontent h3, p {
+    margin: 0px;
 }
 
 .menu-tab {
@@ -135,6 +170,7 @@ header {
 
 /* Main Content */
 .cards {
+    margin: calc(var(--menu-icon-maxh) + 5px) 0px 5px 0px;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: auto auto auto auto;
@@ -143,11 +179,11 @@ header {
 }
 
 .img-card {
-    margin: 5px;
-    padding: 5px;
+    /* margin: 5px; */
+    margin: 2.5px 0px 5px 0px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    /* border-radius: 0px 0px 10px 10px; */
+    border-radius: 10px 10px 10px 10px;
     color: rgb(0, 26, 255);
     background-color: rgba(147, 235, 147, 0.87);
 }
@@ -162,6 +198,11 @@ header {
     font-weight: bold;
 }
 
+.img-card > .img-text {
+    margin: 0px 0px 5px 0px;
+    padding: 5px 0px 0px 5px;
+}
+
 .img-card p {
     color: white;
     /* background-color: gray; */
@@ -170,6 +211,7 @@ header {
 
 .img-card img {
     /* background-color: indigo; */
+    border-radius: 10px 10px 0px 0px;
     width: 100%;
     height: auto;
 }
@@ -180,6 +222,7 @@ header {
         grid-template-columns: 50% 50%;
         grid-template-rows: auto auto auto auto;
         column-gap: 5px;
+        font-size: medium;
         /* background-color: blue; */
     }
 }
@@ -189,6 +232,7 @@ header {
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto auto auto auto;
+        font-size: small;
         column-gap: 5px;
         /* background-color: blue; */
     }
@@ -204,10 +248,22 @@ footer {
 footer a {
     float: right;
     margin: 0px 2.5px 0px 2.5px;
+    padding-right: 2.5px;
     text-decoration: none;
     color: black;
 }
 footer a:hover {
     color: cornflowerblue;
+}
+
+.foot-img {
+    margin: 0px 5px;
+    width: 18px;
+    height: auto;
+}
+
+.foot-img img {
+    width: 18px;
+    height: auto;
 }
   
