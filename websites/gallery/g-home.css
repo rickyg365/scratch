@@ -20,12 +20,13 @@ header {
 
 .tab-grid {
     background-color: transparent;
-    
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
 }
 
 .icon-bar {
     width: 100%; /* Full-width */
-    position: fixed;
     border-radius: 3px;
     display: grid;
     grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
@@ -129,6 +130,7 @@ header {
 }
 
 .icon-content {
+    width: 100%;
     display: grid;
     grid-template-columns: var(--menu-icon-maxw) auto auto auto auto;
     grid-template-rows: auto;
@@ -170,7 +172,7 @@ header {
 
 /* Main Content */
 .cards {
-    margin: calc(var(--menu-icon-maxh) + 5px) 0px 5px 0px;
+    /* margin: calc(var(--menu-icon-maxh) + 5px) 0px 5px 0px; */
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: auto auto auto auto;
@@ -190,6 +192,7 @@ header {
 
 .img-card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border: cadetblue 1px solid;
 }
 
 .img-card > .title {
