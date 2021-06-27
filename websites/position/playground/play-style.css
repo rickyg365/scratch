@@ -1,0 +1,64 @@
+:root {
+
+}
+
+/* html {
+    background-color: yellowgreen;
+} */
+
+body {
+    display: relative;
+    background-color: teal;
+}
+
+div {
+    background-color: gold;
+}
+
+.parent-1 {
+    display: flex;
+    width: 200px;
+    height: auto;
+    background-color: tomato;
+}
+
+.p1 {
+    background-color: blue;
+}
+
+.p1-child1 {
+    background-color: green;
+}
+
+
+.p1-child2 {
+    background-color: orchid;
+}
+
+
+.p1-child3 {
+    background-color: blue;
+}
+
+
+.parent-2{
+    background-color: tomato;
+}
+
+.p2 {
+    background-color: tomato;
+}
+
+.p2-child1 {
+    background-color: blue;
+}
+
+
+.p2-child2 {
+    background-color: green;
+}
+
+
+.p2-child3 {
+    background-color: gold;
+}
