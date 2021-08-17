@@ -246,6 +246,92 @@ def run_display(display_object=Display(), delay_rate=.35):
             run = False
 
 
+def insert_text(display, text, x, y):
+    return
+
+
+def status_box(display, text_input, length=14):
+    """
+
+    .------------.
+    | stat   box |
+    '------------'
+    0123456789abcd
+
+    x, y = 1, 1
+    max_length = 13
+
+    # .: (x, y), (x+13, y)
+    # -: (x+1, y), (x+12, y),
+    #    (x+1, y+2), (x+12, y+2)
+    # |: (x, y+1), (x+13, y+1)
+    # ': (x, y+2), (x+13, y+2)
+
+    stat_box = {
+
+        '.': [
+            (x, y),
+            (x+max_length, y)
+        ]
+        '-': [
+            (x+1, y),
+            (x+(max_length-1), y),
+            (x+1, y+2),
+            (x+(max_length-1), y+2)
+        ],
+        '|': [
+            (x, y+1),
+            (x+max_length, y+1)
+        ],
+        "'": [
+            (x, y+2),
+            (x+max_length, y+2)
+        ]
+
+    }
+    """
+    x, y = 1, 1
+
+    max_char = length-4
+    max_index = length-1
+    if len(text_input) > max_char:
+        text_input = text_input[:max_char]
+    elif len(text_input) < max_char:
+        text_input += (max_char-len(text_input))*" "
+
+    stat_box = {
+        '.': [
+            (x, y),
+            (x + max_index, y)
+        ],
+        # '-': [
+        #     (x + 1, y),
+        #     (x + (max_length - 1), y),
+        #     (x + 1, y + 2),
+        #     (x + (max_length - 1), y + 2)
+        # ],
+        '|': [
+            (x, y + 1),
+            (x + max_index, y + 1)
+        ],
+        "'": [
+            (x, y + 2),
+            (x + max_index, y + 2)
+        ]
+    }
+
+    display.make_line(y, x+1, max_index-1, '-')
+    display.make_line(y+2, x+1, max_index-1, '-')
+
+    for cha, tups in stat_box.items():
+        for tu in tups:
+            r, c = tu
+            display.update_tile(c, r, cha)
+
+    for index, letter in enumerate(text_input):
+        display.update_tile(y+1, x+2+index, letter)
+
+
 if __name__ == "__main__":
     content = [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -260,16 +346,18 @@ if __name__ == "__main__":
 
     my_display = Display(32, 16)
 
-    my_display.make_line(8, 16, 5)
-    my_display.make_line(8, 15, 6, direction='y')
-    my_display.make_line(13, 16, 5)
-    my_display.make_line(8, 21, 6, direction='y')
+    txt = "HelloWorld"
+    status_box(my_display, txt)
+    # my_display.make_line(8, 16, 5)
+    # my_display.make_line(8, 15, 6, direction='y')
+    # my_display.make_line(13, 16, 5)
+    # my_display.make_line(8, 21, 6, direction='y')
 
     items = {
-        '#': [
-            (0, 1),
-            (1, 0)
-        ],
+        # '#': [
+        #     (0, 1),
+        #     (1, 0)
+        # ],
         '+': [
             (20, 0),
             (20, 1),
