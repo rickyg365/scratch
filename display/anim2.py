@@ -3,6 +3,9 @@ import random
 import time
 import keyboard
 
+"""
+Want to do add menu object/class or method
+"""
 # Functions
 
 
@@ -241,6 +244,7 @@ class Display:
         x_vel = 1
         y_vel = self.num_of_col // self.num_of_rows
 
+        # Cursor
         hero = "@"
         reset = " "
 
@@ -252,6 +256,7 @@ class Display:
                 # Clear screen
                 os.system("cls")
 
+                self.status_box(self.num_of_col-14, self.num_of_rows-3, "  FIGHT   ")
                 # print current screen
                 print(self)
 
@@ -323,96 +328,6 @@ class Display:
                 run = False
 
 
-# def run_display(display_object=Display(), delay_rate=.35):
-#         run = True
-#
-#         x, y = 0, 0
-#         # RATIO 8/25
-#         x_vel = 1
-#         y_vel = display_object.num_of_col // display_object.num_of_rows
-#         # round(display_object.content_length/(display_object.content_rows-1))   # (25/8) ~= 3
-#
-#         hero = "@"
-#         reset = " "
-#
-#         display_object.update_tile(x, y, hero)
-#
-#         while run:
-#             try:
-#                 os.system("cls")
-#
-#                 # print current screen
-#                 print(display_object)
-#
-#                 # set old x & y to the current x and y before we add the respective velocity values
-#                 old_x, old_y = x, y
-#                 # set max x & y base on number of rows and characters per row
-#                 max_x = display_object.num_of_rows - 1
-#                 max_y = display_object.num_of_col - 1
-#
-#                 # Check for keys
-#                 # print(keyboard.read_key())
-#                 # Need an extra keyboard.read_key() here
-#                 # I think because we get an up and a downstroke read of each key when we press, ont sure look into it
-#                 keyboard.read_key()
-#
-#                 update_x = x + x_vel
-#                 update_y = y + y_vel
-#
-#                 update_nx = x - x_vel
-#                 update_ny = y - y_vel
-#
-#                 current_key = keyboard.read_key()
-#                 if current_key == 'w' or current_key == 'up':
-#                     if update_nx <= 0:
-#                         x = 0
-#                     else:
-#                         x = update_nx
-#                 elif current_key == 'a':
-#                     if update_ny <= 0:
-#                         y = 0
-#                     else:
-#                         y = update_ny
-#                 elif current_key == 's' or current_key == 'down':
-#                     if update_x >= max_x:
-#                         x = max_x
-#                     else:
-#                         x = update_x
-#                 elif current_key == 'd':
-#                     if update_y >= max_y:
-#                         y = max_y
-#                     else:
-#                         y = update_y
-#
-#                 elif current_key == 'left':
-#                     if y - 1 <= 0:
-#                         y = 0
-#                     else:
-#                         y -= 1
-#
-#                 elif current_key == 'right':
-#                     if y + 1 >= max_y:
-#                         y = max_y
-#                     else:
-#                         y += 1
-#
-#                 else:
-#                     print(f"\n{current_key} not recognized...")
-#                     time.sleep(.75)
-#
-#                 # Reset old hero position
-#                 display_object.update_tile(old_x, old_y, reset)
-#                 # Add hero to his new position
-#                 display_object.update_tile(x, y, hero)
-#
-#                 # time.sleep(delay_rate)
-#
-#             except KeyboardInterrupt:
-#                 print("\n[DISPLAY STOPPED]\n")
-#                 run = False
-#
-
-
 if __name__ == "__main__":
     content = [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -427,22 +342,22 @@ if __name__ == "__main__":
 
     my_display = Display(32, 16)
 
-    items = {
-        '#': [
-            (0, 1),
-            (1, 0)
-        ],
-        '+': [
-            (20, 0),
-            (20, 1),
-            (21, 0),
-            (21, 1)
-        ]
-    }
-
-    for tile, tuples in items.items():
-        for tup in tuples:
-            col, row = tup
-            my_display.update_tile(row, col, tile)
+    # items = {
+    #     '#': [
+    #         (0, 1),
+    #         (1, 0)
+    #     ],
+    #     '+': [
+    #         (20, 0),
+    #         (20, 1),
+    #         (21, 0),
+    #         (21, 1)
+    #     ]
+    # }
+    #
+    # for tile, tuples in items.items():
+    #     for tup in tuples:
+    #         col, row = tup
+    #         my_display.update_tile(row, col, tile)
 
     my_display.run_display()
