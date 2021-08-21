@@ -108,7 +108,5 @@ for attr in attr_names:
 print(simplified)
 
 
-
-
 if __name__ == "__main__":
     ...
