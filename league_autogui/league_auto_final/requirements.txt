@@ -1,0 +1,4 @@
+pyautogui
+pillow
+python-dotenv
+opencv-python
