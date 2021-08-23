@@ -178,7 +178,7 @@ if __name__ == "__main__":
         client_handler.set_gamemode(gamemode)
         client_handler.set_timer(float(timer))
 
-        # print(client_handler)
+        print(client_handler)
 
         # Open League client
         client_handler.open_client()
@@ -208,7 +208,7 @@ if __name__ == "__main__":
         client_handler.set_gamemode(gamemode)
         client_handler.set_timer(float(timer))
 
-        # print(client_handler)
+        print(client_handler)
         client_handler.monitor_mode()
 
         # Open League client

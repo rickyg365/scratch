@@ -5,13 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; Start Code
 !j::
-send #1
-WinWait, Windows PowerShell
-	; run cmd.exe
-    ; WinWait, ahk_exe cmd.exe ; Wait for CMD to start
-    ; Send c:{enter} ; Go to C drive
-    Send cd C:\Users\ricky\Documents\python_scripts\git_ready\scratch\league_autogui\league_auto_final\{enter} ; go to script's folder
-    Send python league_auto_final.pyw{enter}
+
+run, C:\Users\ricky\Documents\python_scripts\git_ready\scratch\league_autogui\league_auto_final\league_auto_final.pyw
 
 ; just automatically closes for some reason
 ; runwait, python C:\Users\ricky\Documents\python_scripts\git_ready\scratch\league_autogui\league_auto_vf.py{enter}
