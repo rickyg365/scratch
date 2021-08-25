@@ -77,6 +77,9 @@ def format_time(raw_seconds):
 
     # Timer Display
     # return f"[{raw_minutes:02.0f}:{seconds:02.0f}]"
+    # minute_flag = True
+    # second_flag = True
+    # f"{minutes if minute_flag else ''} {seconds if second_flag else ''}"
     return f"{raw_minutes:02.0f} min, {seconds:02.0f} sec"
 
 
@@ -91,19 +94,22 @@ class ClassName:
 
 
 class PomoTimer:
-    def __init__(self, study_timer=25, short_break_timer=10, long_break_timer=15):
+    def __init__(self, study_timer=25, short_break_timer=10, long_break_timer=15, cycle=4, title="p_timer"):
         # 25-50 focus, 10-15 break
         # Cycles before a long break
-        self.cycle = 2
+        self.title = title
+        self.cycle = cycle
 
         self.study_timer = study_timer*60
         self.short_break = short_break_timer*60
         self.long_break = long_break_timer*60
 
+        self.nice_time = f"{format_time(self.study_timer)} {format_time(self.short_break)} {format_time(self.long_break)} "
+
         self.toast = ToastNotifier()
 
     def __str__(self):
-        text = f"Study: {self.study_timer} \nShort Break: {self.short_break} \nLong Break: {self.long_break} \nCycles: {self.cycle}"
+        text = f"[{self.title}] => Study: {self.study_timer} \nShort Break: {self.short_break} \nLong Break: {self.long_break} \nCycles: {self.cycle}"
         return text
 
     @ staticmethod
@@ -136,55 +142,21 @@ class PomoTimer:
 
         run = True
 
-        # study_thread = threading.Thread(
-        #     target=self.make_toast,
-        #     args=('Study', f"{format_time(self.study_timer)}")
-        # )
-        #
-        # break_thread = threading.Thread(
-        #     target=self.make_toast,
-        #     args=('Short Break', f"{format_time(self.short_break)}")
-        # )
-        #
-        # long_break_thread = threading.Thread(
-        #     target=self.make_toast,
-        #     args=('Long Break', f"{format_time(self.short_break)}")
-        # )
-        #
-        # study_thread.daemon = True
-        # break_thread.daemon = True
-        # long_break_thread.daemon = True
-
-        # print("")
-
         while run:
             for _ in range(self.cycle):
                 # Study
-                # if _ == 0:
-                #     study_thread.start()
-                # else:
-                #     study_thread.run()
                 self.make_toast("Study Time", format_time(self.study_timer))
                 self.make_timer("Study", self.study_timer)
 
                 # Break
-                # if _ == 0:
-                #     break_thread.start()
-                #     continue
-                # break_thread.run()
                 self.make_toast("Short Break", format_time(self.short_break))
                 self.make_timer("Break", self.short_break)
 
             # Study
-            # study_thread.run()
             self.make_toast("Study Time", format_time(self.study_timer))
             self.make_timer("Study", self.study_timer)
 
             # Long Break
-            # if not long_break_thread.is_alive():
-            #     long_break_thread.start()
-            # else:
-            #     long_break_thread.run()
             self.make_toast("Long Break", format_time(self.long_break))
             self.make_timer("Long Break", self.long_break)
 
@@ -197,17 +169,134 @@ class PomoTimer:
             # run = False
 
 
-if __name__ == "__main__":
-    #
-    # total_time = float(input("Time: "))
-    #
-    # print(f"raw time: {total_time:,}s")
-    # print(f"formatted time: {format_time(total_time)}")
+class TimerHandler:
+    def __init__(self, raw_data=None, input_file=""):
+        if raw_data is None:
+            raw_data = {}
 
+        raw_data_flag = len(raw_data.keys()) > 0
+        input_file_flag = input_file != ""
+
+        self.timers = []
+        self.choice_dictionary = {}
+
+        # Handle Raw Data
+
+        self.raw_data = raw_data
+        if len(raw_data.keys()) > 0:
+            self.parse_data()
+
+        self.raw_input_file = input_file
+        if input_file_flag:
+            self.parse_file()
+
+    def __str__(self):
+        text = ""
+        for _, timer in enumerate(self.timers):
+            text += f"\n[{_+1}]: {timer.title}"
+        return text
+
+    def parse_data(self):
+        # Build Timers and add to list
+        data = self.raw_data
+
+        for title, param in self.raw_data.items():
+            study, short_break, long_break, cycle = param
+
+            self.add_timer(study, short_break, long_break, cycle, title)
+
+    def parse_file(self):
+        file_path = self.raw_input_file
+
+        # For text files
+        with open(self.raw_input_file, 'r') as read_file_in:
+            for line in read_file_in:
+                print(line)
+
+        # For json files
+
+        # For CSV files
+
+        return "TBI"
+
+    def build_choice_dict(self):
+        for index, timer in enumerate(self.timers):
+            self.choice_dictionary[timer.title] = index
+
+    def add_timer(self, study_timer, short_break, long_break, cycle=4, title="p_timer"):
+
+        new_timer = PomoTimer(
+            study_timer=study_timer,
+            short_break_timer=short_break,
+            long_break_timer=long_break,
+            cycle=cycle,
+            title=title
+        )
+
+        self.timers.append(new_timer)
+
+    def get_timer(self, timer_title):
+        # Choose Timer
+        self.build_choice_dict()
+
+        # get by title
+        if timer_title in self.choice_dictionary.keys():
+            return self.timers[self.choice_dictionary[timer_title]]
+
+        # get by index
+        try:
+            converted_index = int(timer_title) - 1
+        except ValueError:
+            converted_index = ""
+
+        condition = converted_index in self.choice_dictionary.values()
+        if condition:
+            return self.timers[converted_index]
+
+        # Returns default if not a valid choice
+        return self.timers[0]
+
+    def choose_timer(self):
+        # DEFAULT
+        input_choice = self.timers[0]
+
+        # Choose Timer
+        print("**Please type full timer name**")
+        # Display Available Timers
+        print(self)
+
+        try:
+            input_choice = input("\nChoose Timer: ").lower()
+        except KeyboardInterrupt:
+            print("\n \n[Program Stopped]")
+            quit()
+
+        return self.get_timer(input_choice)
+
+
+if __name__ == "__main__":
+    # Raw Timer Data
+    timers_template = {
+        'neuro': (25, 5, 20, 4),
+        'adhd': (10, 3, 5, 4),
+        'test': (1, 1, 3, 2)
+    }
+
+    # Variables
+    timer_handler = TimerHandler(timers_template)
+
+    # Clear Display
     os.system("cls")
 
-    my_timer = PomoTimer(1, 1, 2)
+    # Choose Timer
+    choice_timer = timer_handler.choose_timer()
+
+    # Clear Display
+    os.system("cls")
+
+    # Run Selected Timer
     try:
-        my_timer.start()
+        print(f"[{choice_timer.title.upper()}]\n")
+        choice_timer.start()
     except KeyboardInterrupt:
         print("\n[Program Stopped]")
