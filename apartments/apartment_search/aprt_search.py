@@ -65,23 +65,17 @@ def search_aprt(search_url, headers):
     # get the amenities description
     get_amenities(search_soup, fields)
 
-    # # get the 'interior information'
-    # get_field_based_on_class(soup, 'indoor', 'interiorIcon', fields)
-    #
-    # # get the 'outdoor information'
-    # get_field_based_on_class(soup, 'outdoor', 'parksIcon', fields)
-    #
-    # # get the 'gym information'
-    # get_field_based_on_class(soup, 'gym', 'fitnessIcon', fields)
-    #
-    # # get the 'kitchen information'
-    # get_field_based_on_class(soup, 'kitchen', 'kitchenIcon', fields)
-    #
-    # # get the 'services information'
-    # get_field_based_on_class(soup, 'services', 'servicesIcon', fields)
-    #
-    # # get the 'living space information'
-    # get_field_based_on_class(soup, 'space', 'sofaIcon', fields)
+    # get the 'interior information'
+
+    # get the 'outdoor information'
+
+    # get the 'gym information'
+
+    # get the 'kitchen information'
+
+    # get the 'services information'
+
+    # get the 'living space information'
 
     # get the 'property information'
 
@@ -353,6 +347,27 @@ def get_property_address(soup, fields):
         fields['neighborhood'] = neighborhood
 
 
+def display_data(fields, feat=False, lease=False, amenity=False):
+    for key, value in fields.items():
+        space_value = len(key) + 2
+        if key == 'features' and feat is False:
+            continue
+
+        if key == 'lease' and lease is False:
+            continue
+
+        if key == 'amenities' and amenity is False:
+            continue
+
+        if key == 'description':
+            print(f"\n[{key.title():^{space_value}}]: \n \n{value}\n")
+            continue
+
+        print(f"\n[{key.title():^{space_value}}]: {value}")
+
+    return
+
+
 if __name__ == "__main__":
 
     while True:
@@ -366,8 +381,6 @@ if __name__ == "__main__":
 
         data = search_aprt(url, headers)
 
-        for key, value in data.items():
-            space_value = len(key)+2
-            print(f"\n[{key.title():^{space_value}}]: \n \n{value}\n")
+        display_data(data)
 
         time.sleep(1)
