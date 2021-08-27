@@ -15,10 +15,11 @@ def search_aprt(search_url, headers):
     """
     you need to use your user-agent as a header or else it wont work
     """
-    print("[starting search]\n")
+    print("\n[starting search]\n")
 
     page = requests.get(search_url, headers=headers)
 
+    # print page status
     page_status_map = {
         '2': 'Success',
         '3': 'Redirected',
@@ -26,12 +27,14 @@ def search_aprt(search_url, headers):
     }
     status_code = str(page.status_code)
 
-    print(f"Connection {page_status_map[status_code[0]]}\n")
+    print(f"Connection {page_status_map[status_code[0]]}!\n")
+    if status_code[0] != '2':
+        return None
 
+    # Get soup
     search_soup = BeautifulSoup(page.content, "html.parser")
     search_soup.prettify()
 
-    # NOT OG
     # the information we need to return as a dict
     fields = {}
 
@@ -220,7 +223,7 @@ def get_amenities(soup, fields):
     # Process list
     titles = []
     for title in raw_titles:
-        titles.append(f"{title.get_text()}:\n")
+        titles.append(f"{title.get_text()}")
 
     # Get main amenity list
     raw_card_sections = soup.find_all('div', class_="amenitiesIconGridContainer mortar-wrapper fourColumnGrid")
@@ -232,7 +235,7 @@ def get_amenities(soup, fields):
         cards = section.find_all('p', class_="amenityLabel")
         section_data = ''
         for card in cards:
-            section_data += f"{card.get_text()}\n"
+            section_data += f" - [{card.get_text()}]\n"
         card_sections.append(section_data)
 
     # Get other amenity list
@@ -263,7 +266,7 @@ def get_amenities(soup, fields):
         current_card_section = card_sections[i]
         current_other = other[i]
 
-        new_data += f"{current_title}:\n{current_card_section}\n{current_other}"
+        new_data += f"{current_title}:\n \n{current_card_section}\n{current_other}\n"
 
     fields['amenities'] = new_data
 
@@ -286,7 +289,7 @@ def get_lease_fees_pets(soup, fields):
     if objs is not None:
         text = ''
         for obj in objs:
-            text += f"{obj.get_text(strip=True)}\n"
+            text += f" - {obj.get_text(strip=True)}\n"
             # print(text)
 
         fields['lease'] = text
@@ -364,6 +367,7 @@ if __name__ == "__main__":
         data = search_aprt(url, headers)
 
         for key, value in data.items():
-            print(f"\n{key}: \n{value}\n")
+            space_value = len(key)+2
+            print(f"\n[{key.title():^{space_value}}]: \n \n{value}\n")
 
         time.sleep(1)
