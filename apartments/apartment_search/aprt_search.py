@@ -15,7 +15,7 @@ def search_aprt(search_url, headers):
     """
     you need to use your user-agent as a header or else it wont work
     """
-    print("starting")
+    print("[starting search]\n")
 
     page = requests.get(search_url, headers=headers)
 
@@ -26,25 +26,17 @@ def search_aprt(search_url, headers):
     }
     status_code = str(page.status_code)
 
-    print(f"Connection {page_status_map[status_code[0]]}")
+    print(f"Connection {page_status_map[status_code[0]]}\n")
 
     search_soup = BeautifulSoup(page.content, "html.parser")
     search_soup.prettify()
 
-    start = search_soup.find('div', id="profilePaid")
-
-    # Contact Info
-    contact_card = start.find('aside', id='contactLead')
-    cta = contact_card.find('div', class_="ctaContainer")
-    phone_label = cta.find('p', class_="phoneLabel")
-    phone = phone_label.find('span', class_="phoneNumber")
-    phone_number = phone.get_text()
-
-    print(phone_number)
-
     # NOT OG
     # the information we need to return as a dict
     fields = {}
+
+    # get the phone number
+    get_phone_number(search_soup, fields)
 
     # get the name of the property
     get_property_name(search_soup, fields)
@@ -108,6 +100,27 @@ def get_images(soup, fields):
             fields['img'] += '![' + img['alt'] + '](' + img['src'] + ') '
 
 
+def get_phone_number(soup, fields):
+    """"""
+    fields['phone'] = ''
+
+    if soup is None:
+        print("[phone soup]: FAILED")
+        return
+
+    start = soup.find('div', id="profilePaid")
+
+    # Contact Info
+    contact_card = start.find('aside', id='contactLead')
+    cta = contact_card.find('div', class_="ctaContainer")
+    phone_label = cta.find('p', class_="phoneLabel")
+    phone = phone_label.find('span', class_="phoneNumber")
+    phone_number = phone.get_text()
+
+    # print(phone_number)
+    fields['phone'] = phone_number
+
+
 def get_description(soup, fields):
     """Get the description for the apartment"""
 
@@ -164,12 +177,16 @@ def get_features(soup, fields):
     fields['features'] = ''
 
     if soup is None:
-        print("feaature soup failed")
+        print("[feature soup]: FAILED")
         return
 
     soup = soup.find('section', id="descriptionSection")
 
     soup = soup.find('div', class_="subSpec")
+
+    if soup is None:
+        print("[feature soup]: NO FEATURES")
+        return
 
     soup = soup.find('ul')
 
@@ -255,8 +272,8 @@ def get_lease_fees_pets(soup, fields):
     """Get the description for the apartment"""
 
     fields['lease'] = ''
-    fields['fees'] = ''
-    fields['pets'] = ''
+    # fields['fees'] = ''
+    # fields['pets'] = ''
 
     if soup is None:
         return
@@ -272,7 +289,6 @@ def get_lease_fees_pets(soup, fields):
             text += f"{obj.get_text(strip=True)}\n"
             # print(text)
 
-        # could use strip = true instead of this custom function I borrowed
         fields['lease'] = text
 
 
@@ -337,18 +353,17 @@ def get_property_address(soup, fields):
 if __name__ == "__main__":
 
     while True:
-        input()
-        url = "https://www.apartments.com/electric-lofts-oakland-ca/19yqez7/"  # "https://www.apartments.com/macarthur-commons-oakland-ca/xrz7hcm/"
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36'
         }
+        url = input("Apartment URL: ")
+
         if url.lower() == 'q':
             break
 
         data = search_aprt(url, headers)
 
         for key, value in data.items():
-            print(f"{key}: {value}\n")
+            print(f"\n{key}: \n{value}\n")
 
         time.sleep(1)
-        break
