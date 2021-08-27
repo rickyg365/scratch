@@ -219,11 +219,35 @@ class BuildScraper:
         ]
         runes = self.steps_div_class(rune_steps, base_runes)
 
-        base_primary, secondary_plus = runes.find_all('div', class_='m-1953d5c')
+        branches = runes.find_all('div', class_='m-1953d5c')
+        base_primary, secondary_plus = branches
+
+        # Find Branch
+        branch_map = {
+            'Precision': 'm-ysur5m',
+            'Domination': 'm-x6atmv',
+            'Sorcery': 'm-1gvu32d',
+            'Inspiration': 'm-ynny72',
+            'Resolve': 'm-atmt6i',
+        }
+
+        branch_names = []
+        for branch in branches:
+            branch_steps = [
+                'm-16mmcnu',
+                'm-1c9b3nz',
+                'm-1izw5ay'
+            ]
+            name_element = self.steps_div_class(branch_steps, branch)
+            branch_names.append(name_element.get_text(strip=True))
+
+        print(branch_names)
+        # primary_name, secondary_name = branch_names
+        # Primary Runes
 
         primary_steps = [
             'm-16mmcnu',
-            'm-ysur5m',
+            f"{branch_map[branch_names[0]]}",
         ]
 
         primary = self.steps_div_class(primary_steps, base_primary)
@@ -246,7 +270,7 @@ class BuildScraper:
         # Secondary
         secondary_steps = [
             'm-16mmcnu',
-            'm-x6atmv',
+            branch_map.get(branch_names[1])
         ]
         secondary_rows = self.steps_div_class(secondary_steps, secondary_plus)
         active_rows = secondary_rows.find_all('div', class_="m-1hok3la")
@@ -284,15 +308,43 @@ class BuildScraper:
 
         print('Other: ', other_runes)
 
-
-
-
-
-
-        return
-
     def get_sum_spells(self):
         return
+
+    def run_scraper(self):
+        """
+        Build out the skeleton and then when you get to branch points call individual functions that take in start_point
+        """
+        # VALIDATE CHAMP AND GAMEMODE
+        self.validate_champ()
+        self.validate_gamemode()
+
+        # BUILD URL
+        self.build_url()
+
+        # GET/REFRESH SOUP
+        self.refresh_soup()
+
+        # FIND ROOT
+        # in __init__
+
+        # FIND MAIN BRANCH ROOTS aka branch out
+        # GET PATCH
+        self.branch_out()
+
+        # GET RANK AND TIER
+        self.get_champ_tier_rank()
+
+        # GET SKILLS
+        self.get_skill_priority()
+
+        # GET RUNES AND ITEMS
+        self.get_runes_items()
+        # GET RUNES
+        # GET ITEMS
+
+        # SUMS SPELLS
+        self.get_sum_spells()
 
 
 if __name__ == "__main__":
@@ -310,7 +362,7 @@ if __name__ == "__main__":
     # }
     start_time = time.time()
 
-    champ_name = 'vayne'   # data['name']
+    champ_name = 'alistar'   # data['name']
     game_mode = 'aram'  # data['gamemode']
 
     my_scraper = BuildScraper(champ_name, game_mode)
