@@ -16,6 +16,7 @@ def search_aprt(search_url, headers):
     you need to use your user-agent as a header or else it wont work
     """
     print("\n[starting search]\n")
+    time.sleep(.25)  # INSURANCE in case I forget to limit rate
 
     page = requests.get(search_url, headers=headers)
 
@@ -88,17 +89,26 @@ def get_images(soup, fields):
 
     fields['img'] = ''
 
-    if soup is None: return
+    if soup is None:
+        return
 
     # find ul with id fullCarouselCollection
-    soup = soup.find('ul', {'id': 'fullCarouselCollection'})
+    soup = soup.find('section', id='carouselSection')
+
+    if soup is None:
+        return
+
+    soup = soup.find('ul')
+
     if soup is not None:
         for img in soup.find_all('img'):
-            fields['img'] += '![' + img['alt'] + '](' + img['src'] + ') '
+            fields['img'] += f"![{img['alt']}]({img['src']}) \n"  # '![' + img['alt'] + '](' + img['src'] + ') '
 
 
 def get_phone_number(soup, fields):
-    """"""
+    """
+    Not all listings have an aside,, some have a contact box under their description
+    """
     fields['phone'] = ''
 
     if soup is None:
@@ -108,6 +118,9 @@ def get_phone_number(soup, fields):
     start = soup.find('div', id="profilePaid")
 
     # Contact Info
+    if start is None:
+        print("[phone soup]: FAILED")
+        return
     contact_card = start.find('aside', id='contactLead')
     cta = contact_card.find('div', class_="ctaContainer")
     phone_label = cta.find('p', class_="phoneLabel")
@@ -211,6 +224,10 @@ def get_amenities(soup, fields):
 
     soup = soup.find('section', id="amenitiesSection")
 
+    if soup is None:
+        print("amenity soup failed")
+        return
+
     # Get title list
     raw_titles = soup.find_all('h2', class_="sectionTitle")
 
@@ -255,14 +272,17 @@ def get_amenities(soup, fields):
     total_amenity_sections = len(titles)
     new_data = ''
 
-    for i in range(total_amenity_sections):
-        current_title = titles[i]
-        current_card_section = card_sections[i]
-        current_other = other[i]
+    try:
+        for i in range(total_amenity_sections):
+            current_title = titles[i]
+            current_card_section = card_sections[i]
+            current_other = other[i]
 
-        new_data += f"{current_title}:\n \n{current_card_section}\n{current_other}\n"
+            new_data += f"{current_title}:\n \n{current_card_section}\n{current_other}\n"
 
-    fields['amenities'] = new_data
+        fields['amenities'] = new_data
+    except IndexError:
+        print("something went wrong with the card index, maybe there are none")
 
 
 def get_lease_fees_pets(soup, fields):
@@ -273,10 +293,14 @@ def get_lease_fees_pets(soup, fields):
     # fields['pets'] = ''
 
     if soup is None:
+        print(f"[lease soup]: FAILED")
         return
 
     soup = soup.find('div', id="profileV2FeesWrapper")
     # soup.find('section', id="feesSection")
+    if soup is None:
+        print(f"[lease soup]: FAILED")
+        return
 
     objs = soup.find_all('li')
 

@@ -31,9 +31,9 @@ if __name__ == "__main__":
                 key = new_data['name']
                 aprt_data[key] = new_data
 
-                print(f"[data acquired]: {key}")
+                print(f"\n[SUCCESSFUL]: {key}")
 
-            time.sleep(1)
+            time.sleep(2)
 
     # create list of names from apartment data keys (apartment name)
     choice_list = []
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
         if choice in exit_choices:
             # Quit Program
-            print("[exiting program]")
+            print("\n[exiting program]\n")
             break
 
         if choice in valid_choices:
