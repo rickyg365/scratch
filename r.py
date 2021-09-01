@@ -42,7 +42,7 @@ if __name__ == "__main__":
     try:
         for t, msg in data.items():
             # Toast Thread
-            toast.show_toast(t, msg, duration=duration)  # can add icon_path="icon.ico"
+            toast.show_toast(t, msg, duration=duration, icon_path="question.ico")  # can add icon_path="icon.ico"
 
             # time.sleep(duration - .25)
 

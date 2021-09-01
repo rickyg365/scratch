@@ -5,6 +5,8 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+from flatten import *
+
 
 """
 Huge shout out to: https://github.com/adinutzyc21/apartments-scraper/blob/master/parse_apartments.py
@@ -101,8 +103,12 @@ def get_images(soup, fields):
     soup = soup.find('ul')
 
     if soup is not None:
+        imgs = []
         for img in soup.find_all('img'):
             fields['img'] += f"![{img['alt']}]({img['src']}) \n"  # '![' + img['alt'] + '](' + img['src'] + ') '
+            imgs.append(f"![{img['alt']}]({img['src']})")
+
+        fields['img-data'] = imgs
 
 
 def get_phone_number(soup, fields):
@@ -204,13 +210,16 @@ def get_features(soup, fields):
 
     if obj is not None:
         features = ''
+        features_data = []
         for element in obj:
             raw_text = element.find('span').get_text()
+            features_data.append(raw_text)
             text = f" - {raw_text}\n"
             features += text
 
         # could use strip = true instead of this custom function I borrowed
         fields['features'] = features
+        fields['features-data'] = features_data
 
 
 def get_amenities(soup, fields):
@@ -219,13 +228,13 @@ def get_amenities(soup, fields):
     fields['amenities'] = ''
 
     if soup is None:
-        print("amenity soup failed")
+        print("[amenity soup]: failed")
         return
 
     soup = soup.find('section', id="amenitiesSection")
 
     if soup is None:
-        print("amenity soup failed")
+        print("[amenity soup]: failed")
         return
 
     # Get title list
@@ -241,38 +250,49 @@ def get_amenities(soup, fields):
 
     # Process list
     card_sections = []
+    card_sections_data = []
 
     for section in raw_card_sections:
         cards = section.find_all('p', class_="amenityLabel")
         section_data = ''
+        indv_section = []
+
+        # Get all the cards from each section
         for card in cards:
+            indv_section.append(card.get_text())
             section_data += f" - [{card.get_text()}]\n"
         card_sections.append(section_data)
+        card_sections_data.append(indv_section)
 
     # Get other amenity list
     raw_other = soup.find_all('div', class_="spec")
 
     # Process list
     other = []
+    other_data = []
 
     for section in raw_other:
         groups = section.find_all('ul')
 
         group_text = ''
+        indv_group = []
         for group in groups:
             elements = group.find_all('li', class_="specInfo")
             for element in elements:
                 sp = element.find('span')
                 text = sp.get_text()
+                indv_group.append(text)
                 group_text += f" - {text}\n"
 
         other.append(group_text)
+        other_data.append(indv_group)
 
     # Combine data list
     total_amenity_sections = len(titles)
     new_data = ''
 
     try:
+        final_data = {}
         for i in range(total_amenity_sections):
             current_title = titles[i]
             current_card_section = card_sections[i]
@@ -280,7 +300,13 @@ def get_amenities(soup, fields):
 
             new_data += f"{current_title}:\n \n{current_card_section}\n{current_other}\n"
 
+            data_key = f"{current_title}"
+            group_data = card_sections_data + other_data
+            final_data[data_key] = group_data
+
         fields['amenities'] = new_data
+        fields['amenities_data'] = final_data
+
     except IndexError:
         print("something went wrong with the card index, maybe there are none")
 
@@ -306,11 +332,14 @@ def get_lease_fees_pets(soup, fields):
 
     if objs is not None:
         text = ''
+        section_objs = []
         for obj in objs:
             text += f" - {obj.get_text(strip=True)}\n"
             # print(text)
+            section_objs.append(obj.get_text(strip=True))
 
         fields['lease'] = text
+        fields['lease_data'] = section_objs
 
 
 def get_property_name(soup, fields):
@@ -372,22 +401,38 @@ def get_property_address(soup, fields):
 
 
 def display_data(fields, feat=False, lease=False, amenity=False):
-    for key, value in fields.items():
-        space_value = len(key) + 2
-        if key == 'features' and feat is False:
-            continue
-
-        if key == 'lease' and lease is False:
-            continue
-
-        if key == 'amenities' and amenity is False:
-            continue
-
-        if key == 'description':
-            print(f"\n[{key.title():^{space_value}}]: \n \n{value}\n")
-            continue
-
-        print(f"\n[{key.title():^{space_value}}]: {value}")
+    flattend_data = flatten_print(fields)
+    print(flattend_data)
+    # for key, value in fields.items():
+    #     space_value = len(key) + 2
+    #
+    #     # if type(value) is dict:
+    #     #     for k, v in value.items():
+    #     #         print(f"{k}: \n{v}")
+    #     #     continue
+    #     #
+    #     # if type(value) is list:
+    #     #     for item in value:
+    #     #         print(item)
+    #     #     continue
+    #
+    #     if key == 'img':
+    #         continue
+    #
+    #     if key == 'features' and feat is False:
+    #         continue
+    #
+    #     if key == 'lease' and lease is False:
+    #         continue
+    #
+    #     if key == 'amenities' and amenity is False:
+    #         continue
+    #
+    #     if key == 'description':
+    #         print(f"\n[{key.title():^{space_value}}]: \n \n{value}\n")
+    #         continue
+    #
+    #     print(f"\n[{key.title():^{space_value}}]: {value}")
 
     return
 
