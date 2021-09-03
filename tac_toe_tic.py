@@ -90,17 +90,18 @@ class TicTacToe:
 
     @staticmethod
     def intro_screen():
-        intro = f"""
+        intro = f"""Turn: (current player)
 
- 1,1┃1,2┃1,3 
- ━━━╋━━━╋━━━ 
- 2,1┃2,2┃2,3 
- ━━━╋━━━╋━━━ 
- 3,1┃3,2┃3,3   
+ 1 ┃ 2 ┃ 3  
+━━━╋━━━╋━━━ 
+ 4 ┃ 5 ┃ 6  
+━━━╋━━━╋━━━ 
+ 7 ┃ 8 ┃ 9    
 
-
+Choose spot: N
 """
         print(intro)
+        input("Press Enter to continue...")
 
     def switch_turns(self):
         self.score += 1
@@ -117,20 +118,33 @@ class TicTacToe:
         self.x_moves.append(data)
         return
 
-    def make_move(self, tup):
+    def make_move(self, choice):
         player_turn = {
-            0: 'o',
-            1: 'x'
+            0: 'O',
+            1: 'X'
         }
         player = player_turn.get(self.turn)
 
+        key_map = {
+            '1': (0, 0),
+            '2': (0, 1),
+            '3': (0, 2),
+            '4': (1, 0),
+            '5': (1, 1),
+            '6': (1, 2),
+            '7': (2, 0),
+            '8': (2, 1),
+            '9': (2, 2)
+        }
+
+        tup = key_map.get(choice)
         if tup in self.in_use:
             return False
 
         x, y = tup
 
         try:
-            self.data[x-1][y-1] = player
+            self.data[x][y] = player
         except Exception as e:
             print(e)
         self.in_use.append(tup)
@@ -176,25 +190,57 @@ class TicTacToe:
 
         return False
 
+    @staticmethod
+    def validate_input(some_input):
+        valid_input = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9'
+        ]
+        if some_input not in valid_input:
+            return False
+
+        return True
+
     def run_match(self):
+        # Reset Board
         self.reset()
         running = True
 
+        # Main Game loop
         while running:
             os.system('cls')
-
+            # if more than 9 rounds end game, because board is full
             if self.score == 9:
                 running = False
                 break
+
+            # display board
             print(self)
-            user_input = input(f"[{'O' if self.turn == 0 else 'X'}]: ")
 
-            x, y = user_input.split(',')
+            # User input
+            try:
+                user_input = input(f"Choose spot: ")
+                input_status = self.validate_input(user_input)
+                if not input_status:
+                    input("Invalid Input, try again sucker.")
+                    continue
 
-            new_pair = (int(x), int(y))
+                self.make_move(user_input)
+            except KeyboardInterrupt:
+                print("\n \n[Program Closed]\n")
+                break
 
-            self.make_move(new_pair)
+            # Check for win
             win_status = self.check_win()
+
+            # for a win
             if win_status:
                 os.system('cls')
                 print(self)
@@ -229,6 +275,8 @@ if __name__ == "__main__":
     #     print(ele, ele.decode("unicode-escape")*3)
 
     new_game = TicTacToe()
+    os.system('cls')
     new_game.intro_screen()
 
     new_game.run_match()
+
