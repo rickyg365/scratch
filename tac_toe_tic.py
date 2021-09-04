@@ -43,10 +43,10 @@ row2 = '\u2501\u2501\u2501\u254B\u2501\u2501\u2501\u254B\u2501\u2501\u2501'
 # Classes
 class TicTacToe:
     def __init__(self):
-        self.score = 0
+        self.round = 0
 
-        self.player_moves = []
-        self.other_moves = []
+        self.o_moves = []
+        self.x_moves = []
 
         self.data = [
             [' ', ' ', ' '],
@@ -57,9 +57,6 @@ class TicTacToe:
         self.in_use = []
 
         self.turn = 0
-
-        self.o_moves = []
-        self.x_moves = []
 
         self.display = str(self)
 
@@ -80,13 +77,20 @@ class TicTacToe:
         return text
 
     def reset(self):
+        self.round = 0
+
+        self.o_moves = []
+        self.x_moves = []
+
+        self.in_use = []
+
         self.data = [
             [' ', ' ', ' '],
             [' ', ' ', ' '],
             [' ', ' ', ' ']
         ]
 
-        self.display = str(self)
+        self.update_display()
 
     @staticmethod
     def intro_screen():
@@ -104,11 +108,19 @@ Choose spot: N
         input("Press Enter to continue...")
 
     def switch_turns(self):
-        self.score += 1
+        self.round += 1
         if self.turn < 1:
             self.turn += 1
             return
         self.turn -= 1
+
+    def current_symbol(self):
+        player_turn = {
+            0: 'O',
+            1: 'X'
+        }
+
+        return player_turn.get(self.turn)
 
     def append_player_move(self, data):
         if self.turn == 0:
@@ -118,39 +130,16 @@ Choose spot: N
         self.x_moves.append(data)
         return
 
-    def make_move(self, choice):
-        player_turn = {
-            0: 'O',
-            1: 'X'
-        }
-        player = player_turn.get(self.turn)
-
-        key_map = {
-            '1': (0, 0),
-            '2': (0, 1),
-            '3': (0, 2),
-            '4': (1, 0),
-            '5': (1, 1),
-            '6': (1, 2),
-            '7': (2, 0),
-            '8': (2, 1),
-            '9': (2, 2)
-        }
-
-        tup = key_map.get(choice)
-        if tup in self.in_use:
-            return False
-
+    def make_move(self, tup):
+        # move variables
+        player_symbol = self.current_symbol()
         x, y = tup
 
-        try:
-            self.data[x][y] = player
-        except Exception as e:
-            print(e)
-        self.in_use.append(tup)
+        self.data[x][y] = player_symbol
 
         self.append_player_move(tup)
 
+        # It is only up to this point that the round counter goes up after it passes all the previous code
         self.switch_turns()
 
         return True
@@ -190,8 +179,7 @@ Choose spot: N
 
         return False
 
-    @staticmethod
-    def validate_input(some_input):
+    def validate_input(self, some_input):
         valid_input = [
             '1',
             '2',
@@ -203,50 +191,105 @@ Choose spot: N
             '8',
             '9'
         ]
-        if some_input not in valid_input:
+
+        not_valid = some_input not in valid_input
+        repeat = some_input in self.in_use
+
+        if not_valid or repeat:
             return False
 
+        self.in_use.append(some_input)
         return True
 
+    def process_input(self, raw_input):
+        key_map = {
+            '1': (0, 0),
+            '2': (0, 1),
+            '3': (0, 2),
+            '4': (1, 0),
+            '5': (1, 1),
+            '6': (1, 2),
+            '7': (2, 0),
+            '8': (2, 1),
+            '9': (2, 2)
+        }
+        return key_map.get(raw_input)
+
+    def update_display(self):
+        self.display = str(self)
+
+    def print_display(self):
+        self.update_display()
+        os.system('cls')
+        print(self.display)
+
     def run_match(self):
-        # Reset Board
+        """   """
+        # Reset Board, just in case
         self.reset()
-        running = True
 
         # Main Game loop
-        while running:
-            os.system('cls')
+        while True:
             # if more than 9 rounds end game, because board is full
-            if self.score == 9:
-                running = False
-                break
+            if self.round == 9:
+                self.reset()
+                return True
 
             # display board
-            print(self)
+            self.print_display()
 
             # User input
             try:
                 user_input = input(f"Choose spot: ")
-                input_status = self.validate_input(user_input)
-                if not input_status:
+
+                valid_input = self.validate_input(user_input)
+                if not valid_input:
                     input("Invalid Input, try again sucker.")
                     continue
 
-                self.make_move(user_input)
+                cleaned_input = self.process_input(user_input)
+
+                self.make_move(cleaned_input)  # Honestly even if it returns false nothing happens
+
             except KeyboardInterrupt:
-                print("\n \n[Program Closed]\n")
-                break
+                print("\n \n[Program Closed]: Match interrupted\n")
+                return False
 
             # Check for win
             win_status = self.check_win()
 
             # for a win
             if win_status:
-                os.system('cls')
-                print(self)
+                self.print_display()
                 print(f"\n{'X' if self.turn==0 else 'O'} Wins! ")
-                running = False
-                break
+
+                self.reset()
+                return True
+
+    def run_game(self):
+        os.system('cls')
+        self.intro_screen()
+
+        try:
+            while True:
+                successful_match = self.run_match()
+
+                if not successful_match:
+                    break
+
+                play = input("\nPlay again?: ")
+
+                exit_options = [
+                    'q',
+                    'n'
+                ]
+                play_status = False if play in exit_options else True
+
+                if not play_status:
+                    break
+
+        except KeyboardInterrupt:
+            print("\n \n[Program Closed]\n")
 
 
 if __name__ == "__main__":
@@ -275,8 +318,5 @@ if __name__ == "__main__":
     #     print(ele, ele.decode("unicode-escape")*3)
 
     new_game = TicTacToe()
-    os.system('cls')
-    new_game.intro_screen()
 
-    new_game.run_match()
-
+    new_game.run_game()
