@@ -58,10 +58,17 @@ class TicTacToe:
 
         self.turn = 0
 
+        self.o_score = 0
+        self.x_score = 0
+
         self.display = str(self)
 
     def __str__(self):
-        text = f"Turn: {'O' if self.turn == 0 else 'X'}\n"
+        """
+        Score: [O]: 0 | [X]: 0
+
+        """
+        text = f"Score: \n O: {self.o_score}     X: {self.x_score}\n"
 
         # Variables
         uni_column = '\u2503'
@@ -94,7 +101,8 @@ class TicTacToe:
 
     @staticmethod
     def intro_screen():
-        intro = f"""Turn: (current player)
+        intro = f"""Score:
+ O: (O SCORE)     X: (X SCORE)
 
  1 ┃ 2 ┃ 3  
 ━━━╋━━━╋━━━ 
@@ -102,7 +110,7 @@ class TicTacToe:
 ━━━╋━━━╋━━━ 
  7 ┃ 8 ┃ 9    
 
-Choose spot: N
+Choose spot [ (CURRENT PLAYER) ]: (Input Number)
 """
         print(intro)
         input("Press Enter to continue...")
@@ -233,6 +241,7 @@ Choose spot: N
             # if more than 9 rounds end game, because board is full
             if self.round == 9:
                 self.reset()
+                print("\nTied Game!")
                 return True
 
             # display board
@@ -240,7 +249,7 @@ Choose spot: N
 
             # User input
             try:
-                user_input = input(f"Choose spot: ")
+                user_input = input(f"Choose spot [{'O' if self.turn == 0 else 'X'}]: ")
 
                 valid_input = self.validate_input(user_input)
                 if not valid_input:
@@ -261,9 +270,19 @@ Choose spot: N
             # for a win
             if win_status:
                 self.print_display()
-                print(f"\n{'X' if self.turn==0 else 'O'} Wins! ")
 
-                self.reset()
+                x_win = self.turn == 0
+
+                if x_win:
+                    self.x_score += 1
+                    print('X Wins!')
+                    return True
+
+                self.o_score += 1
+                print('O Wins!')
+
+                # self.reset()
+
                 return True
 
     def run_game(self):
