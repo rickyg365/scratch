@@ -40,6 +40,10 @@ row2 = '\u2501\u2501\u2501\u254B\u2501\u2501\u2501\u254B\u2501\u2501\u2501'
 """
 
 
+def clear_screen():
+    os.system('cls')
+
+
 # Classes
 class TicTacToe:
     def __init__(self):
@@ -228,7 +232,7 @@ Choose spot [ (CURRENT PLAYER) ]: (Input Number)
 
     def print_display(self):
         self.update_display()
-        os.system('cls')
+        clear_screen()
         print(self.display)
 
     def run_match(self):
@@ -269,16 +273,16 @@ Choose spot [ (CURRENT PLAYER) ]: (Input Number)
 
             # for a win
             if win_status:
-                self.print_display()
-
                 x_win = self.turn == 0
 
                 if x_win:
                     self.x_score += 1
+                    self.print_display()
                     print('X Wins!')
                     return True
 
                 self.o_score += 1
+                self.print_display()
                 print('O Wins!')
 
                 # self.reset()
@@ -286,7 +290,7 @@ Choose spot [ (CURRENT PLAYER) ]: (Input Number)
                 return True
 
     def run_game(self):
-        os.system('cls')
+        clear_screen()
         self.intro_screen()
 
         try:
