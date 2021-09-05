@@ -106,7 +106,7 @@ class TicTacToe:
     @staticmethod
     def intro_screen():
         intro = f"""Score:
- O: (O SCORE)     X: (X SCORE)
+ O: (o-score)     X: (x-score)
 
  1 ┃ 2 ┃ 3  
 ━━━╋━━━╋━━━ 
@@ -114,7 +114,7 @@ class TicTacToe:
 ━━━╋━━━╋━━━ 
  7 ┃ 8 ┃ 9    
 
-Choose spot [ (CURRENT PLAYER) ]: (Input Number)
+Choose spot [ current-player ]: (input-number)
 """
         print(intro)
         input("Press Enter to continue...")
