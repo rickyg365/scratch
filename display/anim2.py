@@ -5,6 +5,17 @@ import keyboard
 
 """
 Want to do add menu object/class or method
+
+─	━	│	┃	┄	┅	┆	┇	┈	┉	┊	┋	┌	┍	┎	┏
+┐	┑	┒	┓	└	┕	┖	┗	┘	┙	┚	┛	├	┝	┞	┟
+┠	┡	┢	┣	┤	┥	┦	┧	┨	┩	┪	┫	┬	┭	┮	┯
+┰	┱	┲	┳	┴	┵	┶	┷	┸	┹	┺	┻	┼	┽	┾	┿
+╀	╁	╂	╃	╄	╅	╆	╇	╈	╉	╊	╋	╌	╍	╎	╏
+═	║	╒	╓	╔	╕	╖	╗	╘	╙	╚	╛	╜	╝	╞	╟
+╠	╡	╢	╣	╤	╥	╦	╧	╨	╩	╪	╫	╬	╭	╮	╯
+╰
+
+
 """
 # Functions
 
@@ -73,9 +84,16 @@ class Display:
 
     def status_box(self, x, y, text_input, length=14):
         """
+        v1
         .------------.
-        | stat   box |
+        | status box |
         '------------'
+
+        v2
+        ╭────────────╮
+        │ status box │
+        ╰────────────╯
+
         0123456789abcd
 
         x, y = 1, 1
@@ -121,23 +139,41 @@ class Display:
             text_input += (max_char - len(text_input)) * " "
 
         # Create Border
+        # stat_box = {
+        #     '.': [
+        #         (x, y),
+        #         (x + max_index, y)
+        #     ],
+        #     '|': [
+        #         (x, y + 1),
+        #         (x + max_index, y + 1)
+        #     ],
+        #     "'": [
+        #         (x, y + 2),
+        #         (x + max_index, y + 2)
+        #     ]
+        # }
         stat_box = {
-            '.': [
+            '╭': [
                 (x, y),
+            ],
+            '╮': [
                 (x + max_index, y)
             ],
-            '|': [
+            '╰': [
+                (x, y + 2),
+            ],
+            '╯': [
+                (x + max_index, y + 2)
+            ],
+            '│': [
                 (x, y + 1),
                 (x + max_index, y + 1)
             ],
-            "'": [
-                (x, y + 2),
-                (x + max_index, y + 2)
-            ]
         }
 
-        self.make_line(y, x + 1, max_index - 1, '-')
-        self.make_line(y + 2, x + 1, max_index - 1, '-')
+        self.make_line(y, x + 1, max_index - 1, '─')
+        self.make_line(y + 2, x + 1, max_index - 1, '─')
 
         for cha, tups in stat_box.items():
             for tu in tups:
@@ -212,11 +248,11 @@ class Display:
         output_display = ""
 
         # Top Border
-        top_border = '.' + self.num_of_col * '-' + '.'
+        top_border = '┌' + self.num_of_col * '─' + '┐'
         output_display += top_border
 
         # Side Borders
-        side_border_char = '|'
+        side_border_char = '│'
 
         for i in range(self.num_of_rows):
             output_display += '\n'
@@ -226,7 +262,7 @@ class Display:
             output_display += side_border_char
 
         # Bottom Border
-        bot_border = "\n'" + self.num_of_col * "-" + "'"
+        bot_border = "\n└" + self.num_of_col * "─" + "┘"
         output_display += bot_border
 
         # Status Bar
@@ -245,7 +281,7 @@ class Display:
         y_vel = self.num_of_col // self.num_of_rows
 
         # Cursor
-        hero = "@"
+        hero = ">"
         reset = " "
 
         # Draws Hero
@@ -256,7 +292,6 @@ class Display:
                 # Clear screen
                 os.system("cls")
 
-                self.status_box(self.num_of_col-14, self.num_of_rows-3, "  FIGHT   ")
                 # print current screen
                 print(self)
 
@@ -359,5 +394,8 @@ if __name__ == "__main__":
     #     for tup in tuples:
     #         col, row = tup
     #         my_display.update_tile(row, col, tile)
+
+    # Test Stat box
+    # my_display.status_box(my_display.num_of_col-14, my_display.num_of_rows-3, "  FIGHT   ")
 
     my_display.run_display()
