@@ -1,23 +1,17 @@
 import os
 
 """
-Program: League of Legends, build scraper
-Author: Rickyg3
-Date: 08/23/21
+Program:
+Author:
+Date:
 """
 
 
 # Variables
-base_url = ""
 
 
 # Functions
 def func():
-    return
-
-
-def build_url():
-
     return
 
 
