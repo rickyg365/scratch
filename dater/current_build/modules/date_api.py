@@ -146,6 +146,11 @@ class DateHandler:
 
         self.get_size()
 
+    def check_key(self, key_to_check):
+        if key_to_check in self.data.keys():
+            return True
+        return False
+
     def select_random(self):
         self.get_size()
 
@@ -167,11 +172,12 @@ class DateHandler:
 
     def search_by_name(self, name_to_search):
         """ Add some regex so that we don't need to type the exact name out or something """
-        return self.name_key_dict.get(name_to_search, "name error")
+        return self.name_key_dict.get(name_to_search, None)
 
-    def add_date(self):
+    def add_date(self, name=None, visited=0, location=None, schedule=None, transport=None, cost=None, itinerary=None):
         """
         How do we handle date adding?
+
         1. Custom Date Object
 
         2. Date data as a dictionary (kinda related to above)
@@ -180,9 +186,33 @@ class DateHandler:
         add_date(name, cost, location, ...)
 
         """
-        ...
+        # make new key using size
+        self.get_size()
 
-    def edit_date(self, date_key="", attribute_name="", new_value=""):
+        new_key = f"{self.total_size:03.0f}"
+
+        # add obj to data
+        new_obj = {
+            "id": new_key,
+            "name": name,
+            "visited": visited,
+            "location": location,
+            "schedule": schedule,
+            "transport": transport,
+            "cost": cost,
+            "itinerary": itinerary
+        }
+
+        # add a check to make sure we arent overwriting an existing key
+        if self.check_key(new_key):
+            print("error key exist")
+
+        self.data[new_key] = new_obj
+
+        # sync data
+        self.sync_data()
+
+    def edit_date(self, date_key, attribute_name, new_value):
         # check if attribute is in dict
         if attribute_name in self.data[date_key].keys():
             self.data[date_key][attribute_name] = new_value
