@@ -24,3 +24,6 @@ jupyter/archive.zip
 jupyter/hulu.zip
 jupyter/hulu/hulu_titles.csv
 jupyter/netflix.zip
+level_up/workbooks/grades.csv
+level_up/workbooks/grades.xlsx
+level_up/workbooks/pygrades.xlsx
