@@ -1,4 +1,4 @@
-from dataobj import Inventory, GroceryObj
+from dataobj import Inventory, GroceryItem
 
 
 class TestInventory:
@@ -12,7 +12,7 @@ class TestInventory:
         ]
 
         # Reference Data
-        self.sample_grocery_obj = GroceryObj(**{
+        self.sample_grocery_obj = GroceryItem(**{
             "item_id": 5,
             "name": "Yerba Mate",
             "type": "DRINK",
@@ -20,19 +20,19 @@ class TestInventory:
         })
 
         self.sample_grocery_obj_list = [
-            GroceryObj(**{
+            GroceryItem(**{
                 "item_id": 1,
                 "name": "Carrots",
                 "type": "PRODUCE",
                 "price": 1.25
             }),
-            GroceryObj(**{
+            GroceryItem(**{
                 "item_id": 2,
                 "name": "Ground Beef",
                 "type": "MEAT",
                 "price": 9.24
             }),
-            GroceryObj(**{
+            GroceryItem(**{
                 "item_id": 3,
                 "name": "Milk",
                 "type": "DAIRY",
@@ -85,13 +85,13 @@ class TestInventory:
         """ Test Inventory.remove_item(item_id) method """
         # Expected Output
         remove_item_list = [
-            GroceryObj(**{
+            GroceryItem(**{
                 "item_id": 1,
                 "name": "Carrots",
                 "type": "PRODUCE",
                 "price": 1.25
             }),
-            GroceryObj(**{
+            GroceryItem(**{
                 "item_id": 3,
                 "name": "Milk",
                 "type": "DAIRY",
@@ -112,7 +112,7 @@ class TestInventory:
 
     def find_item_test(self):
         # Expected Output
-        sample_output_obj = GroceryObj(**{
+        sample_output_obj = GroceryItem(**{
                 "item_id": 1,
                 "name": "Carrots",
                 "type": "PRODUCE",

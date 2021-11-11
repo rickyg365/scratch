@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sample Form</title>
+</head>
+<body>
+    <header class="flex-ctr">
+        <h1 class="main-title">My Title</h1>
+    </header>
+
+    <main class="form-wrapper flex-ctr">
+        
+        <form name="myForm" id="myForm" onsubmit="return validateForm()">
+        <!-- action: sends the form data to this URL -->
+            <fieldset>
+                <legend>Simple Text Input</legend>
+                <!-- for: references input id -->
+                <!-- name: used to reference element in JavaScript or form data after form is submitted -->
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname">
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>Text Area</legend>
+                <!-- Can define size using rows, cols attributes or inline style -->
+                <!-- style="width:200px; height:600px;" -->
+                <textarea name="message" cols="30" rows="10">Please input message...</textarea>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>Select Simple</legend>
+                <!-- size: select how many options are shown, default is 1 -->
+                <label for="items">Choose an option:</label>
+                <select id="items" name="items">
+                    <!-- First item is selected by default, add selected inside of option element attr to change -->
+                    <option value="item1">item1</option>
+                    <option value="item2">item2</option>
+                    <option value="item3">item3</option>
+                    <option value="item4">item4</option>
+                    <option value="item5">item5</option>
+                </select>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>Select Multiple</legend>
+                <!-- The user selects from the dropdown items -->
+                <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+                <label for="multi_items">Choose an option:</label>
+                <select id="multi_items" name="multi_items" multiple>
+                    <!-- First item is selected by default, add selected inside of option element attr to change -->
+                    <option value="item1">item1</option>
+                    <option value="item2">item2</option>
+                    <option value="item3">item3</option>
+                    <option value="item4">item4</option>
+                    <option value="item5">item5</option>
+                </select>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>DataList</legend>
+                <!-- Datalist provides options for text input, the user can still type or choose a dropdown choice -->
+                <!-- The input list attr references the datalist, IOW: datalist_id -->
+                <input list="options" name="dataList">
+                <datalist id="options">
+                    <option value="Internet Explorer">
+                    <option value="Firefox">
+                    <option value="Chrome">
+                    <option value="Opera">
+                    <option value="Safari">
+                </datalist>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>Buttons</legend>
+                <!-- 
+                    While <input> elements of type button are still perfectly valid HTML, 
+                    the newer <button> element is now the favored way to create buttons. 
+                    Given that a <button>’s label text is inserted between the opening 
+                    and closing tags, you can include HTML in the label, even images 
+                    <button> types:
+                        button: no event handler
+                        submit(default): submits form data
+                        reset: resets the fields in form when clicked
+                -->
+                <button type="button" onclick="alert('Hi, this is an alert')">Click to Alert!</button>
+
+                <!-- Functionally the same -->
+                <input type="submit" value="Submit">
+                <button type="submit">Submit</button>
+                
+                <!-- Reset Form -->
+                <button type="reset" onclick="alertReset()">Reset</button>
+
+            </fieldset>
+        </form>
+    </main>
+
+    <script src="source.js"></script>
+</body>
+</html>

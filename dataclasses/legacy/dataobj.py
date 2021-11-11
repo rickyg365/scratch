@@ -1,5 +1,5 @@
 import os
-
+import datetime
 from typing import Optional
 from dataclasses import dataclass
 
@@ -23,13 +23,14 @@ from dataclasses import dataclass
 
 
 @dataclass
-class GroceryObj:
+class GroceryItem:
     name: str
     type: str
     price: float
     brand: Optional[str] = None
     flavor: Optional[str] = None
     item_id: Optional[int] = None
+    description: Optional[str] = None
 
     def __str__(self):
         self.validate_type(self.type)
@@ -76,7 +77,7 @@ class Inventory:
             text += f"{_+1}| {item}\n"
         return text
 
-    def add_item(self, new_item: GroceryObj) -> None:
+    def add_item(self, new_item: GroceryItem) -> None:
         """ Add item to list of items """
         self.items.append(new_item)
         self.quick_access[new_item.item_id] = new_item
@@ -146,7 +147,7 @@ if __name__ == "__main__":
 
     # Iterate through data and add as GroceryObj to Inventory
     for my_item in obj_list:
-        my_inventory.add_item(GroceryObj(**my_item))
+        my_inventory.add_item(GroceryItem(**my_item))
 
     # Display Current Inventory
     print(f"\n[ Current Inventory ], Size: {my_inventory.length}")
