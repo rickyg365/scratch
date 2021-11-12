@@ -37,9 +37,9 @@ class Inventory:
         return self.items
 
     def pretty_print(self, console_width=0):
-        title_bar = f"Current Inventory , Size: {self.length} \n[ID] Name : Quantity Type"
+        title_bar = f"Current Inventory , Size: {my_inventory.length} \n[ID] Name : Quantity Type"
         visual_break = f"\n{console_width * '-'}"
-        inventory = f"\n{self}"
+        inventory = f"\n{my_inventory}"
 
         # return title_bar + visual_break + inventory
         print(title_bar + visual_break + inventory)
@@ -74,6 +74,26 @@ class Inventory:
             if item.is_finished():
                 self.remove_item(item.item_id)
 
+    def filter(self, attr: str, condition="default") -> List[InventoryItem]:
+        temp_list = []
+        match condition:
+            case "gt":
+                for item in self.items:
+                    if item > attr:
+                        temp_list.append(item)
+                return temp_list
+            case "lt":
+                for item in self.items:
+                    if item < attr:
+                        temp_list.append(item)
+                return temp_list
+
+            case "default":
+                for item in self.items:
+                    if item == attr:
+                        temp_list.append(item)
+                return temp_list
+
 
 class InventoryAnalyzer:
     def __init__(self):
@@ -89,7 +109,7 @@ class InventoryAnalyzer:
 
         return temp_list
 
-    def summary(self, items: List[InventoryItem], threshold: float = 0.3) -> str:
+    def low_summary(self, items: List[InventoryItem], threshold: float = 0.3) -> str:
         """ Returns a Summary of any quantities that are low """
         summary_report = f"\r"
 
@@ -101,7 +121,7 @@ class InventoryAnalyzer:
 
         return summary_report
 
-    def summary_bar(self, items: List[InventoryItem], threshold: float = 0.3, console_width: int = 10, sep: str = "\n") -> str:
+    def low_summary_bar(self, items: List[InventoryItem], threshold: float = 0.3, console_width: int = 10, sep: str = "\n") -> str:
         usable_space = console_width-3
         summary_report = f"\r"
 
@@ -189,12 +209,54 @@ if __name__ == "__main__":
     # Display Current Inventory
     my_inventory.pretty_print(width)
 
+    # Edit Inventory
+    my_inventory.remove_item(2)
+
+    # Display New Inventory
+    my_inventory.pretty_print(width)
+
+    # Item Lookup
+    print(f"[ Item Lookup ]")
+
+    print(f"{width * '-'}")
+
+    # Python anti pattern, find the best way to handle this.
+    # null_data = lambda x: "Item not found" if x is None else x
+    #
+    # print(null_data(my_inventory.find_item(3)))
+    #
+    # print(null_data(my_inventory.find_item(2)))
+
+    search = my_inventory.find_item(3)
+    print("Item not found" if search is None else search)
+
+    fail_search = my_inventory.find_item(2)
+    print("Item not found" if fail_search is None else fail_search)
+
+    print("\n")
+
+    # Clear Empty
+    # my_inventory.remove_empty()
+    # my_inventory.pretty_print(width)
+    # print("\n")
+
     # Analyze Inventory
     analyzer = InventoryAnalyzer()
 
-    my_report1 = analyzer.summary(my_inventory(), 0.8)
-    my_report2 = analyzer.summary_bar(my_inventory(), 0.8, console_width=width//2, sep="")
+    my_report1 = analyzer.low_summary(my_inventory(), 0.8)
+    my_report2 = analyzer.low_summary_bar(my_inventory(), 0.8, console_width=width//2, sep="")
 
     print(f"Low Summary Report: \n{width * '-'}", my_report1)
 
     print(f"Low Summary Report w/ bar: \n{width * '-'}", my_report2)
+
+    # Filter Inventory -> returns temp copy doesnt actually mutate, this is useful for data
+    filtered_items = analyzer.filter(my_inventory(), lambda x: x.type == "PRODUCE")
+    print(f"Filtered items: \n{width * '-'}")
+
+    for item in filtered_items:
+        print(item)
+
+    last_report = analyzer.low_summary_bar(filtered_items, 1, console_width=width//2, sep="")
+
+    print(f"\nLast Low Summary Bar Report w/ filtered items: \n{width * '-'}", last_report)

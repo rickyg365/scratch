@@ -124,5 +124,6 @@ if __name__ == "__main__":
 
     print(f"{'-' * width}")
     print("Groceries: ", GroceryItem(**sample_grocery_obj))
-    print("Inventory: ", InventoryItem(**sample_inventory_obj))
+    print("Inventory: ", InventoryItem(**sample_inventory_obj).__repr__())
+
     print(f"{'-'*width}")
