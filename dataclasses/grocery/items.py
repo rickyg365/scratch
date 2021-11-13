@@ -1,5 +1,5 @@
 import os
-import datetime
+from datetime import datetime
 from typing import Optional
 from dataclasses import dataclass
 
@@ -8,6 +8,7 @@ from dataclasses import dataclass
 
 # Enum is good for data you don't need to display, maybe just need for comparison within python
 # class GroceryType(Enum):
+#     ESSENTIALS = auto()
 #     PRODUCE = auto()
 #     DAIRY = auto()
 #     MEAT = auto()
@@ -17,6 +18,7 @@ from dataclasses import dataclass
 #     CONDIMENT = auto()
 #     SPICE = auto()
 #     CANNED = auto()
+#     FROZEN = auto()
 #     DRINK = auto()
 #     ALCOHOL = auto()
 #     JUNK = auto()
@@ -39,25 +41,54 @@ class GroceryItem:
     description: Optional[str] = None
 
     def __str__(self):
-        return f"[{self.item_id:^-3.0f}] {self.name:<20}: \t${self.price}  \t{self.type}"
+        return f"[{self.item_id:^-3.0f}] {self.name:<20}: \t${self.price}  \t{self.flavor}"
 
     def __repr__(self):
-        return f"<{self.__class__.__name__}: {self.name}[{self.item_id:03.0f}] : ${self.price} : {self.type}>"
+        return f"<{self.__class__.__name__}: {self.name}[{self.item_id:03.0f}] : ${self.price} : {self.flavor}>"
 
 
 @dataclass
 class InventoryItem(GroceryItem):
-    purchase_date: datetime.date = datetime.datetime.now()
+    purchase_date: datetime.date = datetime.now()
     quantity_bought: int = 1
     quantity_remaining: int = 1
     quantity_unit: Optional[str] = None
     expiration_date: Optional[datetime.date] = None
 
     def __str__(self):
-        return f"[{self.item_id:^-3.0f}] {self.name:<20}: \t{self.quantity_remaining}/{self.quantity_bought} {self.quantity_unit} \t{self.type}"
+        return f"[{self.item_id:^-3.0f}] {self.name:<20}: \t{self.quantity_remaining}/{self.quantity_bought} {self.quantity_unit} \t{self.flavor}"
 
     # def __repr__(self):
     #     return f"<{self.__class__.__name__}: {self.name}[{self.item_id:03.0f}] : ${self.price} : {self.type}>"
+
+    def validate_types(self):
+        """
+        name: str
+        type: str
+        price: float
+        brand: Optional[str] = None
+        flavor: Optional[str] = None
+        item_id: Optional[int] = None
+        description: Optional[str] = None
+        purchase_date: datetime.date = datetime.datetime.now()
+        quantity_bought: int = 1
+        quantity_remaining: int = 1
+        quantity_unit: Optional[str] = None
+        expiration_date: Optional[datetime.date] = None
+        """
+        # Have to do
+        # Price
+        self.price = float(self.price)
+        # item_id
+        self.item_id = int(self.item_id)
+        # purchase_date
+        # self.purchase_date = datetime.strptime(self.purchase_date, "%m/%d/%Y")
+        # quantity_bought
+        self.quantity_bought = int(self.quantity_bought)
+        # quantity_remaining
+        self.quantity_remaining = int(self.quantity_remaining)
+        # expiration_date
+        # self.expiration_date = datetime.strptime(self.purchase_date, "%m/%d/%Y")
 
     def update_quantity(self, new_quantity):
         """ Update remaining quantity """
