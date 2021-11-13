@@ -27,3 +27,6 @@ jupyter/netflix.zip
 level_up/workbooks/grades.csv
 level_up/workbooks/grades.xlsx
 level_up/workbooks/pygrades.xlsx
+dataclasses/grocery/groc.csv
+dataclasses/grocery/grocery_data.csv
+dataclasses/grocery/grocery_data.ods
