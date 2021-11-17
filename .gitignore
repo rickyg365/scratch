@@ -30,3 +30,7 @@ level_up/workbooks/pygrades.xlsx
 dataclasses/grocery/groc.csv
 dataclasses/grocery/grocery_data.csv
 dataclasses/grocery/grocery_data.ods
+testfile1.txt
+map_grid/map_test.csv
+map_grid/map_sample.csv
+map_grid/simple_map_sample.csv
