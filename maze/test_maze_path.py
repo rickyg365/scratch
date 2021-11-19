@@ -85,7 +85,7 @@ def main():
         maze_display.insert_data(new_maze.new_display_data)
 
         print(maze_display)
-        # time.sleep(.25)
+        time.sleep(.16)
 
     print("\nShortest Path: ")  # , shortest_path
     for k, v in shortest_data.items():

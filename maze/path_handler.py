@@ -118,7 +118,7 @@ def dijkstra_algorithm(graph, start_node):
 def apply_dijkstra(previous_nodes, shortest_path, start, target):
     if previous_nodes.get(target, None) is None:
 
-        print("\nUnable to find path!")
+        print("Unable to find path!")
         error_data = {
             "distance": 0,
             "path": []
