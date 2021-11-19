@@ -36,7 +36,7 @@ class Maze:
             "end": "X",
             "wall": "█",
             "blank": " ",
-            "visited": "."
+            "visited": "*"
         }
 
         # Create New display data
@@ -45,6 +45,21 @@ class Maze:
 
     def __call__(self):
         return self.new_display_data
+
+    def update_maze_cell(self, location, occupied_val):
+        """ (i, j) """
+        i, j = location
+        occupied_key = {
+            0: "blank",
+            1: "wall",
+            2: "start",
+            -1: "end",
+            3: "visited"
+        }
+        self.occupied_cells[i][j] = occupied_val
+
+        token_type = occupied_key[occupied_val]
+        self.new_display_data[i][j] = self.tokens[token_type]
 
     def create_random_maze(self):
         new_display_data = []
