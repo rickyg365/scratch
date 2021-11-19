@@ -115,7 +115,7 @@ def dijkstra_algorithm(graph, start_node):
     return previous_nodes, shortest_path
 
 
-def print_dijkstra(previous_nodes, shortest_path, start, target):
+def apply_dijkstra(previous_nodes, shortest_path, start, target):
     # Smallest Path
     smallest_dist = shortest_path[target]
     smallest_path = collections.deque()
@@ -132,9 +132,9 @@ def print_dijkstra(previous_nodes, shortest_path, start, target):
     # smallest data
     smallest_data = {
         "distance": smallest_dist,
-        "path": smallest_path
+        "path": list(smallest_path)
     }
-    print(smallest_data)
+
     return smallest_data
 
 
@@ -353,7 +353,11 @@ def main():
 
     prev_nodes, short_path = dijkstra_algorithm(final_graph, start_coord)
 
-    print_dijkstra(prev_nodes, short_path, start_coord, end_coord)
+    output_data = apply_dijkstra(prev_nodes, short_path, start_coord, end_coord)
+
+    print("Shortest Path: ")
+    for k, v in output_data.items():
+        print(f"  {k}: {v}")
 
     # # Check Path
     # path_condition = has_path(new_graph, start_coord, end_coord)
