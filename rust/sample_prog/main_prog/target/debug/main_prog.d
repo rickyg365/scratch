@@ -1,0 +1,1 @@
+C:\Users\ricky\Documents\python_scripts\git_ready\scratch\rust\sample_prog\main_prog\target\debug\main_prog.exe: C:\Users\ricky\Documents\python_scripts\git_ready\scratch\rust\sample_prog\main_prog\src\main.rs

@@ -1,0 +1,11 @@
+C:\Users\ricky\Documents\python_scripts\git_ready\scratch\pyrust\pyext-myrustlib\target\release\deps\libc-3a67a8203dca6336.rmeta: C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\lib.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\macros.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\fixed_width_ints.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\mod.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\msvc\mod.rs
+
+C:\Users\ricky\Documents\python_scripts\git_ready\scratch\pyrust\pyext-myrustlib\target\release\deps\liblibc-3a67a8203dca6336.rlib: C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\lib.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\macros.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\fixed_width_ints.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\mod.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\msvc\mod.rs
+
+C:\Users\ricky\Documents\python_scripts\git_ready\scratch\pyrust\pyext-myrustlib\target\release\deps\libc-3a67a8203dca6336.d: C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\lib.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\macros.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\fixed_width_ints.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\mod.rs C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\msvc\mod.rs
+
+C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\lib.rs:
+C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\macros.rs:
+C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\fixed_width_ints.rs:
+C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\mod.rs:
+C:\Users\ricky\.cargo\registry\src\github.com-1ecc6299db9ec823\libc-0.2.108\src\windows\msvc\mod.rs:

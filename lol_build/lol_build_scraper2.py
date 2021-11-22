@@ -50,11 +50,14 @@ class BuildScraper:
         return text
 
     def steps_div_class(self, steps, starting_soup=None):
-        if starting_soup is None:
-            empty_soup = self.soup is None
-            starting_soup = self.get_soup() if empty_soup else self.soup
         current_soup = starting_soup
+        if starting_soup is None:
+            current_soup = self.get_soup() if self.soup is None else self.soup
+            print(starting_soup)
+        # current_soup = starting_soup
+        print(current_soup, "done")
         for step in steps:
+            print(f"{step} \n{current_soup}")
             # do a section find
             new_soup = current_soup.find('div', class_=f"{step}")
             current_soup = new_soup
@@ -344,7 +347,7 @@ class BuildScraper:
         base = self.soup.find('main', class_='m-36y2kb')
         steps = [
             'm-1dw2zw',
-            'm-1hq4tsy'
+            "m-cmscw5"
         ]
 
         root = self.steps_div_class(steps, base)
