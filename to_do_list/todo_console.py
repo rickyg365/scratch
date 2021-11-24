@@ -15,7 +15,9 @@ def load_data(filepath=DEFAULT):
 
     with open(filepath, 'r') as in_data:
 
-        for row in in_data:
+        for _, row in enumerate(in_data):
+            if _ == 0:
+                continue
             if row == "\n":
                 continue
             key, val, stat = row.strip().split(",")
