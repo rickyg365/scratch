@@ -30,22 +30,6 @@ def load_data(filepath=DEFAULT):
 
 def save_data_csv(data, filepath=DEFAULT):
     """ data = ToDoList.taskmap has random \n """
-    # Create list of objs for easy saving
-    length = 0
-    final_list = []
-    for key, task in data.items():
-        task_val, task_status = task.data_tuple()
-
-        final_obj = {
-            "key": key,
-            "val": task_val,
-            "status": task_status
-        }
-
-        final_list.append(final_obj)
-
-        length += 1
-
     with open(filepath, 'w', newline='') as out_data:
         todo_writer = csv.writer(out_data)
 
@@ -56,14 +40,15 @@ def save_data_csv(data, filepath=DEFAULT):
         ]
 
         todo_writer.writerow(indices)
-        for i in range(length):
+        for key, task in data.items():
+            task_val, task_status = task.data_tuple()
             new_row = [
-                final_list[i]['key'],
-                final_list[i]['val'],
-                final_list[i]['status']
+                key,
+                task_val,
+                task_status
             ]
 
-            todo_writer.writerow(new_row, )
+            todo_writer.writerow(new_row)
 
 
 def adding_task_menu(current_list: ToDoList):
@@ -110,9 +95,10 @@ def removing_task_menu(current_list: ToDoList):
 
         print(f"Size: {current_list.length} {extra_text}")
 
-    clear_screen()
-    print("[ EMPTY LIST ]\n\n")
-    input("Press Enter to continue...")
+    if current_list.length == 0:
+        clear_screen()
+        print("[ EMPTY LIST ]\n\n")
+        input("Press Enter to continue...")
 
 
 def editing_task_menu(current_list: ToDoList):
@@ -162,6 +148,7 @@ def loading_task_menu() -> ToDoList:
 
 
 if __name__ == "__main__":
+    # Get Screen Size
     width, height = os.get_terminal_size()
 
     load_file = input("Leave blank for Default: todo_data.csv\nSelect a file: ")
@@ -211,6 +198,9 @@ if __name__ == "__main__":
                 main_list = loading_task_menu()
 
             case "Q" | 'q':
+                save = input("Would you like to save before you quit?: ")
+                if save in ["y", "ye", "yes"]:
+                    saving_task_menu(main_list)
                 break
 
     print("\n[ Quit Program ]\n")
