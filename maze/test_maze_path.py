@@ -9,8 +9,8 @@ from path_handler import graph_print, Graph, dijkstra_algorithm, apply_dijkstra
 def main():
     os.system("cls")
     # Set row height and col width, respectively
-    r = 10
-    c = 20
+    r = 20
+    c = 40
 
     # Create random maze by initializing CreateMazeData object
     new_maze = Maze(r, c)
