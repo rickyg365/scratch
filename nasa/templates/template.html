@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+
+    <title>Astronomy Photo of the Day</title>
+</head>
+<body class="flex-col">
+    <header class="flex-ctr">
+        <h1>Astronomy Picture of the Day</h1>
+    </header>
+
+    <main>
+        <div class="main-container flex-col">
+            {% block card %}
+            {% endblock %}
+        </div>
+    </main>
+    
+</body>
+</html>

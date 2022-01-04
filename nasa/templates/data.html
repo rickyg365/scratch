@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+{% block card %}
+<div class="card">
+    <div class="img-container card-section">
+        <img src="{{ data.get('url') }}" class="responsive-img" alt="standard resolution">
+    </div>
+    <div class="hd flex-ctr card-section">
+        <p>for hd, click <a href="{{ data.get('hdurl') }}" target="_blank">here</a></p>
+    </div>
+    <div class="title flex-col card-section">
+        <h2>{{ data.get('title') }}</h2>
+        <p class="under-title">
+            <span class="copyright">{{ data.get('copyright', 'Uknown Author') }}</span>
+            |
+            <span class="date">{{ data.get('date') }}</span>
+            
+        </p>
+    </div>
+    <div class="data flex-col card-section">
+        <div class="explanation">
+            <p class="limit-text">{{ data.get('explanation') }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
