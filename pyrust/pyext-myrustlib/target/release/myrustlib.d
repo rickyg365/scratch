@@ -1,1 +1,0 @@
-C:\Users\ricky\Documents\python_scripts\git_ready\scratch\pyrust\pyext-myrustlib\target\release\myrustlib.dll: C:\Users\ricky\Documents\python_scripts\git_ready\scratch\pyrust\pyext-myrustlib\src\lib.rs
